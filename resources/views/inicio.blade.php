@@ -842,6 +842,11 @@
             padding: 5rem 0;
         }
 
+        .instalacoes {
+                        background: linear-gradient(135deg, var(--primary-red), var(--primary-red-dark));
+                        padding: 5rem 0
+                    }
+
         .section-alt {
             background: var(--gray-50);
         }
@@ -1874,7 +1879,7 @@
     </section>
 
     <!-- Facilities Section -->
-    <section id="instalacoes" class="section">
+    <section id="instalacoes" class="instalacoes">
         <div class="container">
             <h2 class="section-title">Nossas Instalações</h2>
             <p class="section-subtitle">Conheça nossas modernas instalações esportivas</p>
@@ -1928,7 +1933,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contato" class="section contact">
+    <section id="contato" class="section contact" style="display: none;">
         <div class="container">
             <h2 class="section-title">Entre em Contato</h2>
             <p class="section-subtitle">Tem dúvidas ou quer participar de nossas atividades? Entre em contato conosco!</p>
@@ -2040,14 +2045,14 @@
                 <div class="footer-section">
                     <h4>Contato</h4>
                     <ul>
-                        <li><i class="fas fa-phone"></i> (43) 3262-1234</li>
+                        <li><i class="fas fa-phone"></i> (43) 3262-1964</li>
                         <li><i class="fas fa-envelope"></i> esportes@assai.pr.gov.br</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Rua dos Esportes, 123</li>
+                        <li><i class="fas fa-map-marker-alt"></i>  Av. Rio de Janeiro, 720 CEP 86220-000 - Assaí - PR</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Prefeitura Municipal de Assaí. Todos os direitos reservados.</p>
+                <p>&copy; 2025 Prefeitura Municipal de Assaí. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
