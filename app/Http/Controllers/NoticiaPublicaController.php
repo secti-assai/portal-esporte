@@ -10,14 +10,21 @@ class NoticiaPublicaController extends Controller
     /**
      * Página com todas as notícias publicadas.
      */
-    public function index()
-    {
-        $noticias = Noticia::where('status', 'publicada')
-            ->orderBy('data_publicacao', 'desc')
-            ->paginate(6);
+public function index(Request $request)
+{
+    $query = Noticia::where('status', 'publicada');
 
-        return view('noticias.noticias-index', compact('noticias'));
+    if ($request->filled('categoria')) {
+        $query->where('categoria', $request->categoria);
     }
+
+    $noticias = $query->orderBy('data_publicacao', 'desc')->paginate(6);
+
+    $categorias = Noticia::whereNotNull('categoria')->distinct()->pluck('categoria');
+
+    return view('noticias.noticias-index', compact('noticias', 'categorias'));
+}
+
 
     /**
      * Página de uma notícia completa.

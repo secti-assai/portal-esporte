@@ -33,6 +33,7 @@ class NoticiaController extends Controller
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
+            'categoria' => 'nullable|string|max:255',
             'resumo' => 'required|string|max:500',
             'conteudo' => 'required',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
@@ -40,6 +41,7 @@ class NoticiaController extends Controller
         ]);
 
         $noticia = new Noticia();
+        $noticia->categoria = $request->categoria;
         $noticia->titulo = $request->titulo;
         $noticia->resumo = $request->resumo;
         $noticia->conteudo = $request->conteudo;

@@ -9,7 +9,6 @@
   <script src="https://kit.fontawesome.com/9eac3d54d3.js" crossorigin="anonymous"></script>
 
   <style>
-    /* Mantém imagens internas padronizadas */
     .prose img {
       border-radius: 12px;
       margin: 1.5rem auto;
@@ -17,7 +16,6 @@
       height: auto;
     }
 
-    /* Padroniza vídeos/iframes */
     .prose iframe {
       width: 100%;
       border-radius: 12px;
@@ -25,9 +23,8 @@
       min-height: 360px;
     }
 
-    /* Moldura para imagem de capa */
     .capa-container {
-      aspect-ratio: 16/9; /* formato retangular G1 */
+      aspect-ratio: 16/9;
       overflow: hidden;
       border-radius: 1rem;
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
@@ -37,7 +34,7 @@
     .capa-container img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* corta proporcionalmente */
+      object-fit: cover;
       transition: transform 0.5s ease;
     }
 
@@ -51,7 +48,6 @@
 
   @include('layouts.header')
 
-  <!-- Banner -->
   <section class="relative bg-gray-900 text-white">
     @if($noticia->imagem)
       <img src="{{ asset('storage/'.$noticia->imagem) }}" alt="{{ $noticia->titulo }}"
@@ -60,6 +56,9 @@
     <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80"></div>
 
     <div class="relative z-10 max-w-5xl mx-auto text-center py-20 px-6">
+      @if($noticia->categoria)
+        <p class="text-sm uppercase text-blue-200 tracking-widest mb-2">{{ $noticia->categoria }}</p>
+      @endif
       <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">{{ $noticia->titulo }}</h1>
       <p class="text-blue-100 text-sm flex justify-center items-center gap-4">
         <span><i class="fa-regular fa-calendar"></i> {{ \Carbon\Carbon::parse($noticia->data_publicacao)->format('d/m/Y H:i') }}</span>
@@ -68,31 +67,51 @@
     </div>
   </section>
 
-  <!-- Conteúdo -->
   <main class="max-w-5xl mx-auto px-6 py-16">
 
     <div class="bg-white shadow-xl rounded-2xl overflow-hidden p-8">
-      <!-- Resumo -->
+
+      <!-- Botões de compartilhamento -->
+      <div class="flex justify-center md:justify-end gap-4 mb-10">
+        @php
+          $url = urlencode(request()->fullUrl());
+          $titulo = urlencode($noticia->titulo);
+        @endphp
+
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ $url }}"
+           target="_blank"
+           class="flex items-center justify-center bg-gray-100 hover:bg-blue-50 text-blue-600 p-3 rounded-xl shadow transition">
+           <i class="fa-brands fa-facebook-f text-xl"></i>
+        </a>
+
+        <a href="https://api.whatsapp.com/send?text={{ $titulo }}%20{{ $url }}"
+           target="_blank"
+           class="flex items-center justify-center bg-gray-100 hover:bg-green-50 text-green-600 p-3 rounded-xl shadow transition">
+           <i class="fa-brands fa-whatsapp text-xl"></i>
+        </a>
+
+        <button onclick="navigator.clipboard.writeText(window.location.href)"
+           class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 p-3 rounded-xl shadow transition">
+           <i class="fa-solid fa-share-nodes text-xl"></i>
+        </button>
+      </div>
+
       @if($noticia->resumo)
         <p class="text-lg text-gray-700 italic border-l-4 border-blue-600 pl-4 mb-8 leading-relaxed">
           {{ $noticia->resumo }}
         </p>
       @endif
 
-      <!-- Imagem de capa central dentro do retângulo -->
       @if($noticia->imagem)
         <div class="capa-container mb-10 mx-auto max-w-4xl">
-          <img src="{{ asset('storage/'.$noticia->imagem) }}"
-               alt="{{ $noticia->titulo }}">
+          <img src="{{ asset('storage/'.$noticia->imagem) }}" alt="{{ $noticia->titulo }}">
         </div>
       @endif
 
-      <!-- Corpo principal (HTML do TinyMCE) -->
       <article class="prose prose-lg max-w-none text-gray-800 leading-relaxed">
         {!! $noticia->conteudo !!}
       </article>
 
-      <!-- Voltar -->
       <div class="mt-10 flex justify-between items-center border-t pt-6">
         <a href="{{ route('noticias.index') }}"
            class="inline-flex items-center gap-2 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition">
@@ -105,7 +124,6 @@
       </div>
     </div>
 
-    <!-- Notícias relacionadas -->
     @if($relacionadas->count())
       <div class="mt-20">
         <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-4 border-blue-600 inline-block pb-1">
@@ -146,7 +164,6 @@
     @endif
   </main>
 
-  <!-- Rodapé -->
   <footer class="bg-gray-900 text-gray-400 text-center py-6 mt-20">
     <p>© {{ date('Y') }} Prefeitura Municipal de Assaí — Secretaria de Assistência Social</p>
   </footer>

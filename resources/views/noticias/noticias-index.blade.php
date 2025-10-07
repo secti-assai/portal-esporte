@@ -10,9 +10,9 @@
 
   <style>
     .news-card img {
-      height: 240px;                /* 👈 define tamanho fixo */
+      height: 240px;
       width: 100%;
-      object-fit: cover;            /* 👈 corta proporcionalmente */
+      object-fit: cover;
       transition: transform 0.4s ease;
     }
 
@@ -45,6 +45,22 @@
   <!-- Listagem -->
   <main class="max-w-6xl mx-auto px-6 py-12">
 
+    <!-- Filtro de Categorias -->
+    @if(isset($categorias) && $categorias->count())
+      <div class="mb-10 flex flex-wrap gap-3 justify-center">
+        <a href="{{ route('noticias.index') }}"
+           class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition">
+           Todas
+        </a>
+        @foreach($categorias as $cat)
+          <a href="{{ route('noticias.index', ['categoria' => $cat]) }}"
+             class="px-4 py-2 bg-gray-200 hover:bg-blue-100 text-gray-700 rounded-lg text-sm font-medium transition">
+             {{ $cat }}
+          </a>
+        @endforeach
+      </div>
+    @endif
+
     @if($noticias->count() > 0)
       <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-8">
         @foreach($noticias as $noticia)
@@ -60,6 +76,12 @@
             </a>
 
             <div class="p-5 flex flex-col flex-grow">
+              @if($noticia->categoria)
+                <p class="text-xs font-semibold text-blue-600 uppercase mb-1 tracking-wider">
+                  {{ $noticia->categoria }}
+                </p>
+              @endif
+
               <div class="text-sm text-gray-500 mb-2 flex items-center gap-2">
                 <i class="fa-regular fa-calendar"></i>
                 {{ \Carbon\Carbon::parse($noticia->data_publicacao)->format('d/m/Y') }}

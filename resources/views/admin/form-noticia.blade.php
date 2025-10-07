@@ -98,6 +98,15 @@
         </div>
     </form>
 </div>
+<!-- Categoria -->
+<div>
+  <label class="block text-sm font-semibold mb-2 text-gray-700">Categoria</label>
+  <input type="text"
+         name="categoria"
+         value="{{ old('categoria', $noticia->categoria ?? '') }}"
+         class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+         placeholder="Ex: Projetos, Eventos, Assistência, Habitação...">
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/tinymce@7.2.1/tinymce.min.js"></script>
 <script>
