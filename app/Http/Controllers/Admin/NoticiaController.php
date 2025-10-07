@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class NoticiaController extends Controller
 {
     /**
-     * Exibe todas as notícias (painel admin).
+     * Lista todas as notícias no painel admin.
      */
     public function index()
     {
@@ -19,7 +19,7 @@ class NoticiaController extends Controller
     }
 
     /**
-     * Mostra o formulário de criação.
+     * Mostra o formulário de criação de notícia.
      */
     public function create()
     {
@@ -27,26 +27,29 @@ class NoticiaController extends Controller
     }
 
     /**
-     * Armazena uma nova notícia no banco.
+     * Armazena uma nova notícia.
      */
     public function store(Request $request)
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
+            'categoria' => 'nullable|string|max:255',
             'resumo' => 'required|string|max:500',
-            'conteudo' => 'required|string',
+            'conteudo' => 'required',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'status' => 'required|in:rascunho,publicada',
         ]);
 
         $noticia = new Noticia();
+        $noticia->categoria = $request->categoria;
         $noticia->titulo = $request->titulo;
         $noticia->resumo = $request->resumo;
         $noticia->conteudo = $request->conteudo;
         $noticia->status = $request->status;
         $noticia->data_publicacao = now();
+        $noticia->autor = auth()->user()->name ?? 'Admin';
 
-        // Upload da imagem (opcional)
+        // Upload de imagem principal
         if ($request->hasFile('imagem')) {
             $path = $request->file('imagem')->store('noticias', 'public');
             $noticia->imagem = $path;
@@ -54,11 +57,11 @@ class NoticiaController extends Controller
 
         $noticia->save();
 
-        return redirect()->route('admin.dashboard')->with('ok', 'Notícia criada com sucesso!');
+        return redirect()->route('admin.dashboard')->with('ok', '📰 Notícia publicada com sucesso!');
     }
 
     /**
-     * Mostra o formulário de edição.
+     * Editar uma notícia existente.
      */
     public function edit($id)
     {
@@ -67,7 +70,7 @@ class NoticiaController extends Controller
     }
 
     /**
-     * Atualiza uma notícia existente.
+     * Atualizar uma notícia existente.
      */
     public function update(Request $request, $id)
     {
@@ -76,9 +79,10 @@ class NoticiaController extends Controller
         $request->validate([
             'titulo' => 'required|string|max:255',
             'resumo' => 'required|string|max:500',
-            'conteudo' => 'required|string',
+            'conteudo' => 'required',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'status' => 'required|in:rascunho,publicada',
+            'categoria_id' => 'nullable|exists:categorias,id',
         ]);
 
         $noticia->titulo = $request->titulo;
@@ -86,7 +90,7 @@ class NoticiaController extends Controller
         $noticia->conteudo = $request->conteudo;
         $noticia->status = $request->status;
 
-        // Atualiza imagem (se nova enviada)
+        // Atualiza imagem se necessário
         if ($request->hasFile('imagem')) {
             if ($noticia->imagem && Storage::disk('public')->exists($noticia->imagem)) {
                 Storage::disk('public')->delete($noticia->imagem);
@@ -97,23 +101,41 @@ class NoticiaController extends Controller
 
         $noticia->save();
 
-        return redirect()->route('admin.dashboard')->with('ok', 'Notícia atualizada com sucesso!');
+        return redirect()->route('admin.dashboard')->with('ok', '✏️ Notícia atualizada com sucesso!');
     }
 
     /**
-     * Remove uma notícia.
+     * Exclui uma notícia e sua imagem.
      */
     public function destroy($id)
     {
         $noticia = Noticia::findOrFail($id);
 
-        // Apaga imagem associada, se existir
         if ($noticia->imagem && Storage::disk('public')->exists($noticia->imagem)) {
             Storage::disk('public')->delete($noticia->imagem);
         }
 
         $noticia->delete();
 
-        return redirect()->route('admin.dashboard')->with('ok', 'Notícia excluída com sucesso!');
+        return redirect()->route('admin.dashboard')->with('ok', '🗑️ Notícia excluída com sucesso!');
+    }
+
+    /**
+     * Endpoint do TinyMCE para upload de imagens embutidas.
+     */
+    public function uploadTinyMCE(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            if ($file->isValid()) {
+                $path = $file->store('noticias', 'public');
+                $url = asset('storage/' . $path);
+
+                return response()->json(['location' => $url]);
+            }
+        }
+
+        return response()->json(['error' => 'Falha no upload'], 422);
     }
 }

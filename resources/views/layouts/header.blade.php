@@ -136,6 +136,8 @@
                             <li class="nav-item"><a href="#noticias" class="nav-link">Notícias</a></li>
                             <li class="nav-item"><a href="#projetos" class="nav-link">Projetos</a></li>
                             <li class="nav-item"><a href="#eventos" class="nav-link">Eventos</a></li>
+                            <li><a href="{{ route('noticias.index') }}" class="hover:text-blue-400">Notícias</a></li>
+
                         </ul>
                     </div>
                 </div>

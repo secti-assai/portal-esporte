@@ -16,10 +16,10 @@ class AdminSeeder extends Seeder
     public function run()
     {
         // Verifica se o admin já existe para não duplicar
-        if (Admin::where('email', 'admin@example.com')->doesntExist()) {
+        if (Admin::where('email', 'admin@assai.pr.gov.br')->doesntExist()) {
             Admin::create([
                 'nome' => 'Administrador',
-                'email' => 'admin@example.com',
+                'email' => 'admin@assai.pr.gov.br',
                 'password' => Hash::make('admin123'), // Defina uma senha segura aqui
             ]);
         }

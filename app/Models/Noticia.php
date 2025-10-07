@@ -11,6 +11,7 @@ class Noticia extends Model
 
     protected $fillable = [
         'titulo',
+        'resumo',
         'conteudo',
         'imagem',
         'status',
@@ -20,4 +21,9 @@ class Noticia extends Model
     protected $casts = [
         'data_publicacao' => 'datetime',
     ];
+    public function categoria()
+{
+    return $this->belongsTo(Categoria::class);
+}
+
 }
