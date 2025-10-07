@@ -152,42 +152,38 @@
             <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-3">Agenda de Eventos</h2>
             <p class="text-gray-600 text-lg max-w-2xl mx-auto">Participe dos próximos eventos, workshops e atividades.</p>
         </div>
-        <div class="max-w-4xl mx-auto">
-            <ul class="space-y-6">
-                <li class="flex items-center bg-gray-50 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
-                    <div class="text-center mr-4 sm:mr-6">
-                        <div class="text-2xl sm:text-3xl font-bold text-blue-700">15</div>
-                        <div class="text-sm font-semibold text-gray-600 uppercase">OUT</div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-800">Nome do Evento Genérico</h3>
-                        <p class="text-gray-500 text-sm sm:text-base"><i class="fas fa-clock mr-2"></i>19:00 - 21:00</p>
-                        <p class="text-gray-500 text-sm sm:text-base"><i class="fas fa-map-marker-alt mr-2"></i>Local do Evento, Auditório Principal</p>
-                    </div>
-                </li>
-                <li class="flex items-center bg-gray-50 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
-                    <div class="text-center mr-4 sm:mr-6">
-                        <div class="text-2xl sm:text-3xl font-bold text-blue-700">22</div>
-                        <div class="text-sm font-semibold text-gray-600 uppercase">OUT</div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-800">Workshop sobre Tema Relevante</h3>
-                        <p class="text-gray-500 text-sm sm:text-base"><i class="fas fa-clock mr-2"></i>09:00 - 17:00</p>
-                        <p class="text-gray-500 text-sm sm:text-base"><i class="fas fa-map-marker-alt mr-2"></i>Centro de Convenções</p>
-                    </div>
-                </li>
-                <li class="flex items-center bg-gray-50 p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
-                    <div class="text-center mr-4 sm:mr-6">
-                        <div class="text-2xl sm:text-3xl font-bold text-blue-700">05</div>
-                        <div class="text-sm font-semibold text-gray-600 uppercase">NOV</div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-800">Audiência Pública Municipal</h3>
-                        <p class="text-gray-500 text-sm sm:text-base"><i class="fas fa-clock mr-2"></i>14:00</p>
-                        <p class="text-gray-500 text-sm sm:text-base"><i class="fas fa-map-marker-alt mr-2"></i>Câmara de Vereadores</p>
-                    </div>
-                </li>
-            </ul>
+        <div class="max-w-5xl mx-auto">
+            @if($eventos->count() > 0)
+                <ul class="space-y-6">
+                    @foreach($eventos as $evento)
+                        <li class="event-card">
+                            <div class="event-date">
+                                <div>{{ $evento->data_evento->format('d') }}</div>
+                                <div>{{ $evento->data_evento->format('M') }}</div>
+                            </div>
+
+                            <div class="event-content">
+                                <h3 class="event-title">{{ $evento->titulo }}</h3>
+                                
+                                <div class="event-details-grid">
+                                    <div class="event-info">
+                                        <p><i class="fas fa-clock"></i><strong>Horário:</strong> {{ $evento->data_evento->format('H:i') }}</p>
+                                        <p><i class="fas fa-map-marker-alt"></i><strong>Local:</strong> {{ $evento->local }}</p>
+                                    </div>
+
+                                    @if($evento->descricao)
+                                        <div class="event-description">
+                                            <p>{{ $evento->descricao }}</p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p class="text-center text-gray-500 py-10">Nenhum evento agendado no momento.</p>
+            @endif
         </div>
     </div>
 </section>

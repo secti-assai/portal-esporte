@@ -1,6 +1,6 @@
 /* =========================================================
-   PADRÃO VISUAL — PORTAIS MUNICIPAIS DE ASSAÍ
-   ========================================================= */
+   PADRÃO VISUAL — PORTAIS MUNICIPAIS DE ASSAÍ
+   ========================================================= */
 
 /* === VARIÁVEIS DE CORES E ESTILOS GLOBAIS === */
 :root {
@@ -12,38 +12,28 @@
     --cor-texto-secundario: #000000;
     --cor-borda: #e5e7eb;
     --cor-hover: #16405e;
-    --sombra-card: 0 6px 16px rgba(0, 0, 0, 0.08);
+    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.07);
     --transicao: all 0.3s ease;
 }
 
 /* === ESTILOS BASE (APLICADOS DIRETAMENTE NAS TAGS) === */
 body {
-    /* A classe 'font-inter' no HTML já define a fonte. 
-       Esta regra serve como fallback. */
     font-family: "Inter", "Segoe UI", Roboto, sans-serif;
-
-    /* As cores de fundo e texto são controladas pelo Tailwind no HTML,
-       mas é uma boa prática manter um padrão base. */
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
-
     margin: 0;
     padding: 0;
     line-height: 1.6;
     scroll-behavior: smooth;
 }
 
-/* Estilos base para títulos (podem ser sobrescritos pelo Tailwind) */
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     color: var(--cor-principal);
     margin-bottom: 1rem;
     font-weight: 700;
     line-height: 1.3;
 }
 
-/* Estilo base para parágrafos (pode ser sobrescrito pelo Tailwind) */
 p {
     color: var(--cor-texto-secundario);
     font-size: 1rem;
@@ -52,10 +42,123 @@ p {
 /* =========================================================
    PADRÃO DE IMAGENS
    ========================================================= */
-
-/* Define uma altura padrão e ajuste para as imagens na seção de projetos */
 section#projetos img {
-    height: 20rem; /* 320px - Equivalente a h-80 do Tailwind */
+    height: 20rem;
     object-fit: cover;
-    width: 100%; /* Garante que a imagem ocupe o container */
+    width: 100%;
+}
+
+/* =========================================================
+   AGENDA DE EVENTOS
+   ========================================================= */
+
+.event-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: var(--sombra-card);
+    border: 1px solid var(--cor-borda);
+}
+
+.event-date {
+    text-align: center;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+}
+
+.event-date div:first-child {
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: var(--cor-secundaria);
+}
+
+.event-date div:last-child {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4b5563;
+    text-transform: uppercase;
+}
+
+.event-content {
+    width: 100%;
+}
+
+.event-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.event-details-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr; 
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.event-info p {
+    display: flex;
+    align-items: center;
+    color: #1f2937;
+    font-size: 0.875rem;
+    margin: 0.25rem 0;
+}
+
+.event-info p strong {
+    margin: 0 0.25rem;
+}
+
+.event-info i {
+    width: 1rem;
+    margin-right: 0.5rem;
+    color: #000000; /* ALTERADO: Cor do ícone para preto */
+}
+
+.event-description {
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.6;
+    padding-left: 1rem;
+    border-left: 1px solid var(--cor-borda);
+}
+.event-description p {
+    margin: 0;
+}
+
+/* === RESPONSIVIDADE PARA A AGENDA === */
+@media (max-width: 768px) {
+    .event-card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .event-date {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .event-content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .event-details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .event-info p {
+        justify-content: center;
+    }
+
+    .event-description {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--cor-borda);
+    }
 }

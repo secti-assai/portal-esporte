@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\NoticiaController;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\Admin\EventoController;
 
 Route::get('/', [PortalController::class, 'index'])->name('home');
 Route::get('/noticia/{id}', [PortalController::class, 'show'])->name('noticias.show');
@@ -21,6 +22,7 @@ Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(functi
     Route::get('/noticias/{id}/edit', [NoticiaController::class, 'edit'])->name('noticias.edit');
     Route::put('/noticias/{id}', [NoticiaController::class, 'update'])->name('noticias.update');
     Route::delete('/noticias/{id}', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
+    Route::resource('eventos', EventoController::class)->except(['show']);
 });
 
 
