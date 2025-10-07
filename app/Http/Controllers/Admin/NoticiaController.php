@@ -82,6 +82,7 @@ class NoticiaController extends Controller
             'conteudo' => 'required',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'status' => 'required|in:rascunho,publicada',
+            'categoria_id' => 'nullable|exists:categorias,id',
         ]);
 
         $noticia->titulo = $request->titulo;

@@ -21,4 +21,9 @@ class Noticia extends Model
     protected $casts = [
         'data_publicacao' => 'datetime',
     ];
+    public function categoria()
+{
+    return $this->belongsTo(Categoria::class);
+}
+
 }
