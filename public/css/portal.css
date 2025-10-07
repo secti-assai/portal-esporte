@@ -1,0 +1,61 @@
+/* =========================================================
+   PADRÃO VISUAL — PORTAIS MUNICIPAIS DE ASSAÍ
+   ========================================================= */
+
+/* === VARIÁVEIS DE CORES E ESTILOS GLOBAIS === */
+:root {
+    --cor-principal: #1b3a57;
+    --cor-secundaria: #3b82f6;
+    --cor-realce: #60a5fa;
+    --cor-fundo: #f9fafb;
+    --cor-texto: #333;
+    --cor-texto-secundario: #000000;
+    --cor-borda: #e5e7eb;
+    --cor-hover: #16405e;
+    --sombra-card: 0 6px 16px rgba(0, 0, 0, 0.08);
+    --transicao: all 0.3s ease;
+}
+
+/* === ESTILOS BASE (APLICADOS DIRETAMENTE NAS TAGS) === */
+body {
+    /* A classe 'font-inter' no HTML já define a fonte. 
+       Esta regra serve como fallback. */
+    font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+
+    /* As cores de fundo e texto são controladas pelo Tailwind no HTML,
+       mas é uma boa prática manter um padrão base. */
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+/* Estilos base para títulos (podem ser sobrescritos pelo Tailwind) */
+h1,
+h2,
+h3 {
+    color: var(--cor-principal);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Estilo base para parágrafos (pode ser sobrescrito pelo Tailwind) */
+p {
+    color: var(--cor-texto-secundario);
+    font-size: 1rem;
+}
+
+/* =========================================================
+   PADRÃO DE IMAGENS
+   ========================================================= */
+
+/* Define uma altura padrão e ajuste para as imagens na seção de projetos */
+section#projetos img {
+    height: 20rem; /* 320px - Equivalente a h-80 do Tailwind */
+    object-fit: cover;
+    width: 100%; /* Garante que a imagem ocupe o container */
+}
