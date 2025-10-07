@@ -18,6 +18,7 @@
 </head>
 <body class="bg-gray-100 flex">
 
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="text-center mb-10">
             <h2 class="text-xl font-bold text-white">Painel Admin</h2>
@@ -33,10 +34,13 @@
                 <span>Notícias</span>
             </a>
 
-            <a href="{{ route('admin.eventos.index') }}" class="{{ request()->routeIs('admin.eventos*') ? 'active' : '' }}">
-                <i class="fas fa-calendar fa-fw w-6 text-center"></i>
+            <!-- Eventos -->
+            <a href="{{ route('admin.eventos.index') }}"
+               class="flex items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-gray-800 transition
+                      {{ request()->routeIs('admin.eventos*') ? 'bg-gray-800 text-white' : '' }}">
+                <i class="fas fa-calendar fa-fw w-5 text-center text-yellow-400"></i>
                 <span>Eventos</span>
-
+            </a>
 
             <!-- Categorias -->
             <a href="{{ route('admin.categorias.index') }}"
@@ -78,18 +82,19 @@
         </nav>
     </div>
 
-
+    <!-- Overlay escuro ao abrir menu mobile -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-    <div class="main-content-wrapper" id="main-content-wrapper">
-        <header class="admin-top-bar">
-            <button id="hamburger-btn" class="hamburger-btn">
+    <!-- Conteúdo -->
+    <div class="main-content-wrapper flex-1" id="main-content-wrapper">
+        <header class="admin-top-bar flex items-center gap-4 bg-white shadow p-4 md:hidden">
+            <button id="hamburger-btn" class="hamburger-btn text-gray-700">
                 <i class="fas fa-bars"></i>
             </button>
             <h1 class="text-lg font-semibold text-gray-800">Painel Administrativo</h1>
         </header>
 
-        <main class="main-content">
+        <main class="main-content p-8 overflow-y-auto">
             @yield('content')
         </main>
     </div>
@@ -105,19 +110,9 @@
                 overlay.classList.toggle('open');
             }
 
-            if (hamburgerBtn) {
-                hamburgerBtn.addEventListener('click', toggleSidebar);
-            }
-
-            if (overlay) {
-                overlay.addEventListener('click', toggleSidebar);
-            }
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', toggleSidebar);
+            if (overlay) overlay.addEventListener('click', toggleSidebar);
         });
     </script>
-    <!-- Conteúdo principal -->
-    <main class="main-content flex-1 p-8 overflow-y-auto">
-        @yield('content')
-    </main>
-
 </body>
 </html>
