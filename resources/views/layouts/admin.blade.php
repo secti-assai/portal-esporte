@@ -18,8 +18,7 @@
 </head>
 <body class="bg-gray-100 flex">
 
-    <!-- Sidebar -->
-    <div class="sidebar bg-gray-900 text-gray-200 w-64 min-h-screen flex flex-col p-6">
+    <div class="sidebar" id="sidebar">
         <div class="text-center mb-10">
             <h2 class="text-xl font-bold text-white">Painel Admin</h2>
             <span class="text-xs text-gray-400">Portal da Assistência Social</span>
@@ -33,6 +32,11 @@
                 <i class="fas fa-newspaper fa-fw w-5 text-center"></i>
                 <span>Notícias</span>
             </a>
+
+            <a href="{{ route('admin.eventos.index') }}" class="{{ request()->routeIs('admin.eventos*') ? 'active' : '' }}">
+                <i class="fas fa-calendar fa-fw w-6 text-center"></i>
+                <span>Eventos</span>
+
 
             <!-- Categorias -->
             <a href="{{ route('admin.categorias.index') }}"
@@ -74,6 +78,42 @@
         </nav>
     </div>
 
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="main-content-wrapper" id="main-content-wrapper">
+        <header class="admin-top-bar">
+            <button id="hamburger-btn" class="hamburger-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="text-lg font-semibold text-gray-800">Painel Administrativo</h1>
+        </header>
+
+        <main class="main-content">
+            @yield('content')
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('open');
+            }
+
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', toggleSidebar);
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', toggleSidebar);
+            }
+        });
+    </script>
     <!-- Conteúdo principal -->
     <main class="main-content flex-1 p-8 overflow-y-auto">
         @yield('content')
