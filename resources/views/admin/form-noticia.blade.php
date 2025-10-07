@@ -99,14 +99,24 @@
     </form>
 </div>
 <!-- Categoria -->
+<!-- Categoria -->
 <div>
   <label class="block text-sm font-semibold mb-2 text-gray-700">Categoria</label>
-  <input type="text"
-         name="categoria"
-         value="{{ old('categoria', $noticia->categoria ?? '') }}"
-         class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-         placeholder="Ex: Projetos, Eventos, Assistência, Habitação...">
+  <select name="categoria_id"
+          class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500">
+      <option value="">Selecione uma categoria</option>
+      @foreach(\App\Models\Categoria::orderBy('nome')->get() as $cat)
+          <option value="{{ $cat->id }}"
+            {{ old('categoria_id', $noticia->categoria_id ?? '') == $cat->id ? 'selected' : '' }}>
+            {{ $cat->nome }}
+          </option>
+      @endforeach
+  </select>
+  <p class="text-xs text-gray-500 mt-1">
+      <a href="{{ route('admin.categorias.index') }}" class="text-blue-600 hover:underline">Gerenciar categorias</a>
+  </p>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/tinymce@7.2.1/tinymce.min.js"></script>
 <script>
