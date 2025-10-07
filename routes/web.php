@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\NoticiaController;
 use App\Http\Controllers\NoticiaPublicaController;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\Admin\EventoController;
 use App\Http\Controllers\Admin\CategoriaController;
 use App\Models\Noticia;
 
@@ -91,9 +92,13 @@ Route::middleware(['admin.auth'])
         Route::put('/noticias/{id}', [NoticiaController::class, 'update'])->name('noticias.update');
         Route::delete('/noticias/{id}', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
 
+      
+        // CRUD de Eventos
+        Route::resource('eventos', EventoController::class)->except(['show']);
+
+
         // CRUD de Categorias
         Route::get('/categorias', [CategoriaController::class, 'index'])->name('categorias.index');
         Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
         Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
-
     });

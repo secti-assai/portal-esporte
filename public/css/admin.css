@@ -1,9 +1,10 @@
 body {
     font-family: "Inter", sans-serif;
+    transition: margin-left 0.3s ease-in-out;
 }
 
 .sidebar {
-    background: #0d172a; /* Azul-petróleo escuro */
+    background: #0d172a;
     color: white;
     position: fixed;
     left: 0;
@@ -11,13 +12,14 @@ body {
     bottom: 0;
     width: 250px;
     padding: 2rem 1rem;
-    z-index: 1000;
+    z-index: 1001;
+    transition: transform 0.3s ease-in-out;
 }
 
 .sidebar nav a {
     display: flex;
     align-items: center;
-    color: #a0aec0; /* cinza-400 */
+    color: #a0aec0;
     padding: 0.75rem 1rem;
     font-weight: 500;
     transition: all 0.2s ease-in-out;
@@ -31,13 +33,79 @@ body {
 }
 
 .sidebar nav a.active {
-    background-color: #2563eb; /* blue-600 */
+    background-color: #2563eb;
     color: white;
     font-weight: 600;
 }
 
-.main-content {
+.main-content-wrapper {
     margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content {
     padding: 2rem;
     min-height: 100vh;
+}
+
+/* === NOVOS ESTILOS PARA RESPONSIVIDADE === */
+
+.admin-top-bar {
+    display: none; /* Escondido em telas grandes */
+}
+
+.hamburger-btn {
+    display: none; /* Escondido em telas grandes */
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Media Query para telas menores (ex: celulares e tablets) */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%); /* Esconde o menu para fora da tela */
+    }
+
+    .sidebar.open {
+        transform: translateX(0); /* Mostra o menu quando a classe 'open' é adicionada */
+    }
+
+    .sidebar-overlay.open {
+        display: block; /* Mostra o fundo escuro */
+    }
+
+    .main-content-wrapper {
+        margin-left: 0; /* Conteúdo ocupa a largura total */
+    }
+
+    .main-content {
+        padding: 1rem; /* Reduz o padding em telas menores */
+    }
+
+    .admin-top-bar {
+        background-color: white;
+        padding: 0.75rem 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    .hamburger-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.25rem;
+        cursor: pointer;
+        margin-right: 1rem;
+        color: #1f2937;
+    }
 }
