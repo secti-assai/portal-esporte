@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         // Adiciona a chamada para o seeder do admin
         $this->call([
             AdminSeeder::class,
+            PortalSeeder::class
         ]);
     }
 }
