@@ -8,18 +8,18 @@
             <span>{{ isset($evento) ? 'Editar Evento' : 'Criar Novo Evento' }}</span>
         </h1>
         <a href="{{ route('admin.eventos.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
-             <i class="fas fa-arrow-left mr-2"></i> Voltar
+            <i class="fas fa-arrow-left mr-2"></i> Voltar
         </a>
     </div>
 
     <form action="{{ isset($evento) ? route('admin.eventos.update', $evento->id) : route('admin.eventos.store') }}"
-            method="POST" class="space-y-6">
+          method="POST" class="space-y-6">
         @csrf
         @if(isset($evento))
             @method('PUT')
         @endif
 
-        {{-- Título do Evento (Sem ícone) --}}
+        {{-- Título do Evento --}}
         <div>
             <label for="titulo" class="block text-sm font-semibold mb-2 text-gray-700">Título do Evento</label>
             <input type="text" id="titulo" name="titulo" value="{{ old('titulo', $evento->titulo ?? '') }}" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Ex: Feirão da Cidadania" required>
@@ -37,11 +37,11 @@
                         <option value="">Selecione um local...</option>
                         <option value="custom">✏️ Digitar local personalizado</option>
                     </select>
-                    <input type="text" 
-                           id="local-custom" 
-                           name="local_custom" 
-                           value="{{ old('local', $evento->local ?? '') }}" 
-                           class="w-full border border-gray-300 rounded-lg p-3 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition mt-2 hidden" 
+                    <input type="text"
+                           id="local-custom"
+                           name="local_custom"
+                           value="{{ old('local', $evento->local ?? '') }}"
+                           class="w-full border border-gray-300 rounded-lg p-3 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition mt-2 hidden"
                            placeholder="Digite o local do evento">
                 </div>
                 <p class="text-xs text-gray-500 mt-1">
@@ -63,13 +63,27 @@
         {{-- Descrição --}}
         <div>
             <label for="descricao" class="block text-sm font-semibold mb-2 text-gray-700">Descrição (Opcional)</label>
-            <textarea id="descricao" name="descricao" rows="5" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Forneça mais detalhes sobre o evento...">{{ old('descricao', $evento->descricao ?? '') }}</textarea>
+            <textarea id="descricao" name="descricao" rows="5" 
+                      class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition @error('descricao') border-red-500 @enderror" 
+                      placeholder="Forneça mais detalhes sobre o evento..."
+                      maxlength="500">{{ old('descricao', $evento->descricao ?? '') }}</textarea>
+            
+            {{-- Mensagem de Erro --}}
+            @error('descricao')
+                <p class="text-sm text-red-600 mt-1 flex items-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    {{ $message }}
+                </p>
+            @enderror
+
+            {{-- Contador de Caracteres --}}
+            <div id="char-count" class="text-xs text-right text-gray-500 mt-1">0 / 500</div>
         </div>
 
         {{-- Botões de Ação --}}
         <div class="flex justify-end items-center pt-4">
             <a href="{{ route('admin.eventos.index') }}"
-                class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-lg transition mr-4">
+               class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-lg transition mr-4">
                 Cancelar
             </a>
             <button type="submit"
@@ -82,58 +96,41 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // --- LÓGICA EXISTENTE PARA O CAMPO 'LOCAL' ---
     const localSelect = document.getElementById('local-select');
     const localCustomInput = document.getElementById('local-custom');
     const currentLocal = '{{ old("local", $evento->local ?? "") }}';
     
-    // Carrega os locais do servidor
     fetch('{{ route("admin.api.locais") }}')
         .then(response => response.json())
         .then(locais => {
-            // Limpa opções exceto as padrão
-            const defaultOptions = localSelect.querySelectorAll('option');
-            
-            // Adiciona os locais carregados
             locais.forEach(local => {
                 const option = document.createElement('option');
                 option.value = local.nome;
                 option.textContent = local.text;
-                option.dataset.endereco = local.endereco;
                 localSelect.appendChild(option);
             });
             
-            // Se há um local atual, tenta selecioná-lo
             if (currentLocal) {
-                let found = false;
-                for (let option of localSelect.options) {
+                let found = Array.from(localSelect.options).some(option => {
                     if (option.value === currentLocal) {
                         option.selected = true;
-                        found = true;
-                        break;
+                        return true;
                     }
-                }
+                    return false;
+                });
                 
-                // Se não encontrou nas opções, assume que é customizado
                 if (!found) {
                     localSelect.value = 'custom';
                     localCustomInput.classList.remove('hidden');
                     localCustomInput.value = currentLocal;
-                    localCustomInput.name = 'local'; // Muda o name para ser enviado
-                    localSelect.name = 'local_select'; // Remove name do select
+                    localCustomInput.name = 'local';
+                    localSelect.name = 'local_select';
                 }
             }
         })
-        .catch(error => {
-            console.error('Erro ao carregar locais:', error);
-            // Em caso de erro, mostra input customizado
-            localSelect.value = 'custom';
-            localCustomInput.classList.remove('hidden');
-            localCustomInput.value = currentLocal;
-            localCustomInput.name = 'local';
-            localSelect.name = 'local_select';
-        });
+        .catch(error => console.error('Erro ao carregar locais:', error));
     
-    // Gerencia a alternância entre select e input customizado
     localSelect.addEventListener('change', function() {
         if (this.value === 'custom') {
             localCustomInput.classList.remove('hidden');
@@ -146,6 +143,31 @@ document.addEventListener('DOMContentLoaded', function() {
             localSelect.name = 'local';
         }
     });
+
+    // --- NOVA LÓGICA PARA O CONTADOR DE CARACTERES ---
+    const descricaoTextarea = document.getElementById('descricao');
+    const charCountElement = document.getElementById('char-count');
+    const maxLength = 500;
+
+    function updateCharCount() {
+        const currentLength = descricaoTextarea.value.length;
+        charCountElement.textContent = `${currentLength} / ${maxLength}`;
+        
+        // Muda a cor para vermelho se estiver perto do limite
+        if (currentLength > maxLength - 20) {
+            charCountElement.classList.remove('text-gray-500');
+            charCountElement.classList.add('text-red-600');
+        } else {
+            charCountElement.classList.add('text-gray-500');
+            charCountElement.classList.remove('text-red-600');
+        }
+    }
+
+    // Atualiza ao carregar a página
+    updateCharCount();
+
+    // Atualiza a cada digitação
+    descricaoTextarea.addEventListener('input', updateCharCount);
 });
 </script>
 @endsection

@@ -435,25 +435,24 @@ a {
 /* === EVENTS SECTION (#eventos) === CÓDIGO CORRIGIDO E RESPONSIVO === */
 .events-container {
     max-width: 56rem;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .events-list {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-.events-list li+li {
-    margin-top: 1.5rem;
-}
-
-/* Base (Mobile) */
-.event-card {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    background-color: white;
+    gap: 1.5rem;
+}
+
+.event-card {
+    display: flex;
+    flex-direction: column; /* Layout mobile-first */
+    gap: 1rem;
+    background-color: var(--cor-fundo-branco);
     padding: 1.5rem;
     border-radius: 0.75rem;
     box-shadow: var(--sombra-card);
@@ -462,85 +461,110 @@ a {
 }
 
 .event-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: var(--sombra-card-hover);
 }
 
 .event-date {
-    margin: 0 0 1rem 0;
-    background: #f3f4f6;
-    padding: 0.5rem 1rem;
+    flex-shrink: 0;
+    text-align: center;
+    background-color: var(--cor-fundo);
+    padding: 0.5rem;
     border-radius: 0.5rem;
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
+    width: fit-content;
 }
 
-.event-date div:first-child {
+.event-date span:first-child {
+    display: block;
     font-size: 1.875rem;
     font-weight: 800;
-    color: var(--cor-secundaria);
+    color: var(--cor-principal);
     line-height: 1;
 }
 
-.event-date div:last-child {
-    font-size: 0.8rem;
+.event-date span:last-child {
+    display: block;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--cor-texto-suave);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-.event-content {
-    width: 100%;
+.event-details {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* NOVO: Wrapper para título e meta */
+.event-header {
+    display: flex;
+    flex-direction: column; /* Empilhado no mobile para melhor leitura */
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .event-title {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: var(--cor-principal);
-    margin-top: 0;
-    margin-bottom: 0.75rem;
+    color: var(--cor-texto-titulo);
+    margin: 0;
+    line-height: 1.3;
 }
 
-.event-details-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+/* AJUSTADO: Container para horário e local */
+.event-meta {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha se não couber */
+    align-items: center;
+    gap: 1.25rem; /* Espaçamento entre horário e local */
+    flex-shrink: 0; /* Impede que seja esmagado pelo título */
 }
 
-.event-info p {
+.event-meta p {
     display: flex;
     align-items: center;
-    color: var(--cor-texto-titulo);
     font-size: 0.9rem;
-    margin: 0.25rem 0;
-}
-
-.event-info p strong {
-    margin-right: 0.25rem;
-}
-
-.event-info i {
-    width: 1rem;
-    margin-right: 0.625rem;
     color: var(--cor-texto-paragrafo);
+    margin: 0;
+}
+
+.event-meta i {
+    width: 1rem;
+    margin-right: 0.5rem;
+    color: var(--cor-secundaria);
 }
 
 .event-description {
     font-size: 0.9rem;
     color: var(--cor-texto-paragrafo);
     line-height: 1.6;
-    margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid var(--cor-borda);
     overflow-wrap: break-word;
-    /* Garante que textos longos quebrem a linha */
+    word-break: break-all;
 }
 
-.event-description p {
-    margin: 0;
-    font-size: inherit;
+/* Ajustes no layout do evento para telas maiores */
+@media (min-width: 768px) {
+    .event-card {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .event-date {
+        padding: 0.75rem;
+        width: 5rem;
+    }
+    
+    /* NOVO: Layout lado a lado para o cabeçalho */
+    .event-header {
+        flex-direction: row;
+        justify-content: space-between; /* A MÁGICA ACONTECE AQUI */
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
 }
 
 /* === LEGISLATION, CTA, FAQ SECTIONS (sem alterações) === */
@@ -602,6 +626,34 @@ a {
     background-color: var(--cor-principal);
 }
 
+/* === ESTILOS PARA O BOTÃO DE LEGISLAÇÃO === */
+
+.legislation-footer {
+    text-align: center;
+    margin-top: 2.5rem; /* Adiciona espaço acima do botão */
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaço entre o texto e o ícone */
+    background-color: var(--cor-secundaria);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px; /* Formato de pílula */
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transicao);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+}
+
+.btn-secondary:hover {
+    background-color: var(--cor-principal);
+    transform: translateY(-2px); /* Efeito de elevação */
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+}
+
+/* === CTA SECTION (#cta) === */
 .cta-section {
     padding: 4rem 0;
     background-color: var(--cor-principal);
@@ -660,6 +712,7 @@ a {
     background-color: #1d4ed8;
 }
 
+/* === FAQ SECTION (#faq) === */
 .faq-container {
     max-width: 42rem;
     margin: 0 auto;

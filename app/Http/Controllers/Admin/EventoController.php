@@ -25,7 +25,7 @@ class EventoController extends Controller
             'titulo' => 'required|string|max:255',
             'local' => 'required|string|max:255',
             'data_evento' => 'required|date',
-            'descricao' => 'nullable|string',
+            'descricao' => 'nullable|string|max:500',
         ]);
 
     $data = $request->all();
@@ -45,7 +45,7 @@ class EventoController extends Controller
             'titulo' => 'required|string|max:255',
             'local' => 'required|string|max:255',
             'data_evento' => 'required|date',
-            'descricao' => 'nullable|string',
+            'descricao' => 'nullable|string|max:500',
         ]);
 
     $data = $request->all();

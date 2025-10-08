@@ -167,22 +167,24 @@
                     @foreach($eventos as $evento)
                         <li class="event-card">
                             <div class="event-date">
-                                <div>{{ $evento->data_evento->format('d') }}</div>
-                                <div>{{ $evento->data_evento->format('M') }}</div>
+                                <span>{{ $evento->data_evento->format('d') }}</span>
+                                <span>{{ $evento->data_evento->format('M') }}</span>
                             </div>
-                            <div class="event-content">
-                                <h3 class="event-title">{{ $evento->titulo }}</h3>
-                                <div class="event-details-grid">
-                                    <div class="event-info">
-                                        <p><i class="fas fa-clock"></i><strong>Horário:</strong> {{ $evento->data_evento->format('H:i') }}</p>
-                                        <p><i class="fas fa-map-marker-alt"></i><strong>Local:</strong> {{ $evento->local }}</p>
+                            <div class="event-details">
+                                <div class="event-header">
+                                    <h3 class="event-title">{{ $evento->titulo }}</h3>
+                                    <div class
+                                    ="event-meta">
+                                        {{-- Espaço adicionado depois do ":" --}}
+                                        <p><i class="fas fa-clock"></i><strong>Horário: </strong>&nbsp;{{ $evento->data_evento->format('H:i') }}</p>
+                                        <p><i class="fas fa-map-marker-alt"></i><strong>Local: </strong>&nbsp;{{ $evento->local }}</p>
                                     </div>
-                                    @if($evento->descricao)
-                                        <div class="event-description">
-                                            <p>{{ $evento->descricao }}</p>
-                                        </div>
-                                    @endif
                                 </div>
+                                @if($evento->descricao)
+                                    <div class="event-description">
+                                        {!! nl2br(e($evento->descricao)) !!}
+                                    </div>
+                                @endif
                             </div>
                         </li>
                     @endforeach
@@ -198,10 +200,20 @@
 <section id="legislacao" class="section">
     <div class="container">
         <div class="section-header">
-            <h2>Legislação Pertinente</h2>
+            <h2>Legislação</h2>
             <p>Acesse leis, decretos e documentos importantes.</p>
         </div>
+
+        {{-- BOTÃO CENTRALIZADO (sempre visível) --}}
+        <div class="legislation-footer">
+            <a href="https://leismunicipais.com.br/prefeitura/pr/assai/categorias/assistencia-social" target="_blank" class="btn-secondary">
+                <span>Acessar Repositório de Leis</span>
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+
         @if(isset($legislacoes) && $legislacoes->count() > 0)
+            {{-- A lista de documentos continua aqui --}}
             <div class="legislation-container">
                 <ul class="legislation-list">
                     @foreach($legislacoes as $legislacao)
@@ -220,7 +232,8 @@
                 </ul>
             </div>
         @else
-            <p class="placeholder-text">Nenhum documento publicado.</p>
+            {{-- Mensagem caso não haja documentos --}}
+            <p class="placeholder-text">Nenhum documento publicado diretamente no portal.</p>
         @endif
     </div>
 </section>
