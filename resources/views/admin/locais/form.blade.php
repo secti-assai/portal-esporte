@@ -193,16 +193,14 @@
                         @enderror
                         <p class="text-gray-500 text-xs mt-1">
                             <i class="fas fa-info-circle mr-1"></i>
-                            Liste os principais serviços disponíveis, separados por vírgula ou em linhas
+                            Liste os principais serviços disponíveis, separados por vírgula
                         </p>
                     </div>
                 </div>
 
                 <!-- Botões -->
-                <div class="flex items-center justify-between pt-8 border-t border-gray-200">
+                <div class="flex items-center justify-between pt-8">
                     <div class="text-sm text-gray-500">
-                        <i class="fas fa-info-circle mr-1"></i>
-                        Campos marcados com * são obrigatórios
                     </div>
                     
                     <div class="flex items-center space-x-4">

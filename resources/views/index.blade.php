@@ -68,12 +68,26 @@
                     <div class="location-card">
                         <h3>{{ $local->nome }}</h3>
                         <p class="location-info"><i class="fas fa-map-marker-alt"></i><span>{{ $local->endereco }}</span></p>
+                        
                         @if($local->telefone)
                             <p class="location-info"><i class="fas fa-phone"></i><span>{{ $local->telefone }}</span></p>
                         @endif
+                        
                         @if($local->horario_funcionamento)
-                             <p class="location-info"><i class="fas fa-clock"></i><span>{{ $local->horario_funcionamento }}</span></p>
+                            <p class="location-info"><i class="fas fa-clock"></i><span>{{ $local->horario_funcionamento }}</span></p>
                         @endif
+
+                        @if($local->servicos_oferecidos)
+                            <div class="location-services">
+                                <h4 class="services-title">
+                                    <span>Serviços Oferecidos</span>
+                                </h4>
+                                <div class="services-list">
+                                    {!! nl2br(e($local->servicos_oferecidos)) !!}
+                                </div>
+                            </div>
+                        @endif
+                        
                         @if($local->mapa_url)
                             <a href="{{ $local->mapa_url }}" target="_blank" class="map-link">Ver no mapa <i class="fas fa-external-link-alt"></i></a>
                         @endif
