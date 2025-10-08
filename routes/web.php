@@ -11,6 +11,12 @@ use App\Http\Controllers\PortalController;
 use App\Http\Controllers\Admin\EventoController;
 use App\Http\Controllers\Admin\CategoriaController;
 use App\Models\Noticia;
+use App\Http\Controllers\Admin\MembroEquipeController;
+use App\Http\Controllers\Admin\LocalController;
+use App\Http\Controllers\Admin\LinkRapidoController;
+use App\Http\Controllers\Admin\LegislacaoController;
+use App\Http\Controllers\Admin\FaqController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,9 +52,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 |--------------------------------------------------------------------------
 | 🖼️ UPLOAD DO EDITOR TINYMCE
 |--------------------------------------------------------------------------
-| Esta rota é usada internamente pelo TinyMCE para upload de imagens.
-| Ela responde com JSON contendo o caminho público da imagem salva.
-| O middleware 'web' é necessário para CSRF e sessão.
 */
 Route::post('/admin/upload/tinymce', function (Request $request) {
 
@@ -86,19 +89,23 @@ Route::middleware(['admin.auth'])
         Route::get('/dashboard', [NoticiaController::class, 'index'])->name('dashboard');
 
         // CRUD de Notícias
-        Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
-        Route::post('/noticias', [NoticiaController::class, 'store'])->name('noticias.store');
-        Route::get('/noticias/{id}/edit', [NoticiaController::class, 'edit'])->name('noticias.edit');
-        Route::put('/noticias/{id}', [NoticiaController::class, 'update'])->name('noticias.update');
-        Route::delete('/noticias/{id}', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
-
+        Route::resource('noticias', NoticiaController::class)->except(['show', 'index']);
       
         // CRUD de Eventos
         Route::resource('eventos', EventoController::class)->except(['show']);
-
 
         // CRUD de Categorias
         Route::get('/categorias', [CategoriaController::class, 'index'])->name('categorias.index');
         Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
         Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
+
+        // --- NOVAS ROTAS PARA CONTEÚDO DINÂMICO ---
+        Route::resource('equipe', MembroEquipeController::class)->except(['show']);
+        Route::resource('locais', LocalController::class)->parameters(['locais' => 'local'])->except(['show']);
+        Route::resource('links-rapidos', LinkRapidoController::class)->except(['show']);
+        Route::resource('legislacoes', LegislacaoController::class)->except(['show']);
+        Route::resource('faqs', FaqController::class)->except(['show']);
+        
+        // API para buscar locais dinamicamente
+        Route::get('/api/locais', [LocalController::class, 'getLocais'])->name('api.locais');
     });

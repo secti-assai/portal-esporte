@@ -130,14 +130,15 @@
 
                     <div class="collapse navbar-collapse" id="menuPrincipal">
                         <ul class="navbar-nav ms-auto gap-lg-3 mt-3 mt-lg-0">
-                            {{-- Links para o site público --}}
-                            <li class="nav-item"><a href="#inicio" class="nav-link">Início</a></li>
-                            <li class="nav-item"><a href="#servicos" class="nav-link">Serviços</a></li>
-                            <li class="nav-item"><a href="#noticias" class="nav-link">Notícias</a></li>
-                            <li class="nav-item"><a href="#projetos" class="nav-link">Projetos</a></li>
-                            <li class="nav-item"><a href="#eventos" class="nav-link">Eventos</a></li>
-                            <li><a href="{{ route('noticias.index') }}" class="hover:text-blue-400">Notícias</a></li>
-
+                            <li><a href="{{ url('/#inicio') }}" class="nav-link">Início</a></li>
+                            <li><a href="{{ url('/#equipe') }}" class="nav-link">Equipe</a></li>
+                            <li><a href="{{ url('/#locais') }}" class="nav-link">Locais</a></li>
+                            <li><a href="{{ url('/#servicos') }}" class="nav-link">Serviços</a></li>
+                            <li><a href="{{ route('noticias.index') }}" class="nav-link">Notícias</a></li> 
+                            <li><a href="{{ url('/#eventos') }}" class="nav-link">Eventos</a></li>
+                            <li><a href="{{ url('/#legislacao') }}" class="nav-link">Legislação</a></li>
+                            <li><a href="{{ url('/#atendimento') }}" class="nav-link">Atendimento</a></li>
+                            <li><a href="{{ url('/#faq') }}" class="nav-link">FAQ</a></li>
                         </ul>
                     </div>
                 </div>

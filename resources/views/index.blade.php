@@ -3,174 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Oficial</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Portal da Assistência Social</title>
+    {{-- Removi os links do Tailwind, pois agora os estilos estão no portal.css --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('css/portal.css') }}" rel="stylesheet">
+    {{-- Alpine.js para interatividade (usado no FAQ) --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body class="font-inter bg-gray-50 text-gray-800">
+<body>
 
 @include('layouts.header')
 
-<section id="inicio" class="bg-gradient-to-r from-blue-900 to-blue-600 text-white py-20 md:py-24 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')]"></div>
-    <div class="container mx-auto text-center px-6 relative z-10">
-        <h1 class="text-4xl md:text-5xl text-white font-extrabold mb-4">
-            Portal Oficial
-        </h1>
-        <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 opacity-90">
+{{-- SEÇÃO DE ABERTURA --}}
+<section id="inicio" class="hero-section">
+    <div class="hero-texture"></div>
+    <div class="container hero-content">
+        <h1>Portal da Assistência Social</h1>
+        <p>
             Bem-vindo ao portal institucional. Aqui você encontra notícias, serviços públicos, projetos em andamento e informações de transparência.
         </p>
     </div>
 </section>
 
-<section id="servicos" class="py-16 md:py-20 bg-gray-100">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-3">Serviços em Destaque</h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">Acesso rápido aos principais serviços e informações para o cidadão.</p>
+{{-- QUEM É QUEM --}}
+<section id="equipe" class="section bg-white">
+    <div class="container">
+        <div class="section-header">
+            <h2>Equipe</h2>
+            <p>Conheça os gestores da nossa secretaria.</p>
         </div>
-        <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-8">
-            <a href="#" class="block bg-white p-8 rounded-xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center no-underline">
-                <div class="text-4xl text-blue-600 mb-4 mx-auto w-16 h-16 flex items-center justify-center bg-blue-50 rounded-full">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Agendamentos</h3>
-                <p class="text-gray-600 text-sm">Marque consultas, matrículas ou atendimentos.</p>
-            </a>
-            <a href="#" class="block bg-white p-8 rounded-xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center no-underline">
-                <div class="text-4xl text-blue-600 mb-4 mx-auto w-16 h-16 flex items-center justify-center bg-blue-50 rounded-full">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Calendário Oficial</h3>
-                <p class="text-gray-600 text-sm">Confira as datas e eventos importantes.</p>
-            </a>
-            <a href="#" class="block bg-white p-8 rounded-xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center no-underline">
-                <div class="text-4xl text-blue-600 mb-4 mx-auto w-16 h-16 flex items-center justify-center bg-blue-50 rounded-full">
-                    <i class="fas fa-bullhorn"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Editais e Licitações</h3>
-                <p class="text-gray-600 text-sm">Acompanhe os processos de seleção e contratação.</p>
-            </a>
-            <a href="#" class="block bg-white p-8 rounded-xl shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center no-underline">
-                <div class="text-4xl text-blue-600 mb-4 mx-auto w-16 h-16 flex items-center justify-center bg-blue-50 rounded-full">
-                    <i class="fas fa-info-circle"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Perguntas Frequentes</h3>
-                <p class="text-gray-600 text-sm">Tire suas dúvidas de forma rápida e fácil.</p>
-            </a>
-        </div>
+        @if(isset($equipe) && $equipe->count() > 0)
+            <div class="team-grid">
+                @foreach($equipe as $membro)
+                    <div class="team-member-card">
+                        <img src="{{ $membro->foto ? asset('storage/' . $membro->foto) : 'https://via.placeholder.com/150' }}" alt="Foto de {{ $membro->nome }}" class="team-member-photo">
+                        <h3 class="team-member-name">{{ $membro->nome }}</h3>
+                        <p class="team-member-role">{{ $membro->cargo }}</p>
+                        @if($membro->email)
+                            <p class="team-member-contact"><i class="fas fa-envelope"></i>{{ $membro->email }}</p>
+                        @endif
+                        @if($membro->telefone)
+                            <p class="team-member-contact"><i class="fas fa-phone"></i>{{ $membro->telefone }}</p>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="placeholder-text">Informações da equipe em breve.</p>
+        @endif
     </div>
 </section>
 
-<section id="noticias" class="py-16 md:py-20 bg-white">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-3">Últimas Notícias</h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">Acompanhe as ações e comunicados oficiais do município</p>
+{{-- ENDEREÇOS E CONTATOS --}}
+<section id="locais" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Endereços e Contatos</h2>
+            <p>Encontre nossas unidades de atendimento.</p>
         </div>
-
-        @if($noticias->count() > 0)
-            <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
-                @foreach($noticias as $noticia)
-                    <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border border-gray-100">
-                        @if($noticia->imagem)
-                            <img src="{{ asset('storage/'.$noticia->imagem) }}" alt="{{ $noticia->titulo }}" class="w-full h-56 object-cover">
-                        @else
-                            <img src="/placeholder.svg?height=220&width=400&text=Sem+Imagem" alt="Sem imagem" class="w-full h-56 object-cover">
+        @if(isset($locais) && $locais->count() > 0)
+            <div class="locations-grid">
+                @foreach($locais as $local)
+                    <div class="location-card">
+                        <h3>{{ $local->nome }}</h3>
+                        <p class="location-info"><i class="fas fa-map-marker-alt"></i><span>{{ $local->endereco }}</span></p>
+                        @if($local->telefone)
+                            <p class="location-info"><i class="fas fa-phone"></i><span>{{ $local->telefone }}</span></p>
                         @endif
-                        <div class="p-6 text-center sm:text-left">
-                            <span class="text-sm text-blue-600 font-semibold block mb-2">
-                                {{ $noticia->data_publicacao ? $noticia->data_publicacao->format('d/m/Y') : $noticia->created_at->format('d/m/Y') }}
-                            </span>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2 leading-tight">
-                                {{ $noticia->titulo }}
-                            </h3>
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                {{ Str::limit($noticia->resumo, 130) }}
-                            </p>
-                            <a href="{{ route('noticias.show', $noticia->id) }}" class="text-blue-700 font-semibold hover:text-blue-900 transition flex items-center gap-1 justify-center sm:justify-start">
-                                Ler mais <i class="fas fa-arrow-right text-xs"></i>
-                            </a>
+                        @if($local->horario_funcionamento)
+                             <p class="location-info"><i class="fas fa-clock"></i><span>{{ $local->horario_funcionamento }}</span></p>
+                        @endif
+                        @if($local->mapa_url)
+                            <a href="{{ $local->mapa_url }}" target="_blank" class="map-link">Ver no mapa <i class="fas fa-external-link-alt"></i></a>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="placeholder-text">Informações de contato em breve.</p>
+        @endif
+    </div>
+</section>
+
+{{-- SERVIÇOS (LINKS RÁPIDOS) --}}
+<section id="servicos" class="section bg-white">
+    <div class="container">
+        <div class="section-header">
+            <h2>Serviços</h2>
+            <p>Acesso rápido aos principais serviços e informações.</p>
+        </div>
+        @if(isset($links_rapidos) && $links_rapidos->count() > 0)
+            <div class="services-grid">
+                @foreach($links_rapidos as $link)
+                    <a href="{{ $link->url }}" target="_blank" class="service-card">
+                        <div class="service-card-icon">
+                            <i class="{{ $link->icone }}"></i>
+                        </div>
+                        <h3>{{ $link->titulo }}</h3>
+                        <p>{{ $link->descricao_curta }}</p>
+                    </a>
+                @endforeach
+            </div>
+        @endif
+    </div>
+</section>
+
+{{-- NOTÍCIAS --}}
+<section id="noticias" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Últimas Notícias</h2>
+            <p>Acompanhe as ações e comunicados oficiais do município.</p>
+        </div>
+        @if(isset($noticias) && $noticias->count() > 0)
+            <div class="news-grid">
+                @foreach($noticias as $noticia)
+                    <article class="news-card">
+                        @if($noticia->imagem)
+                            <a href="{{ route('noticias.show', $noticia->id) }}"><img src="{{ asset('storage/'.$noticia->imagem) }}" alt="{{ $noticia->titulo }}" class="news-card-image"></a>
+                        @else
+                            <a href="{{ route('noticias.show', $noticia->id) }}"><img src="/placeholder.svg?height=220&width=400&text=Sem+Imagem" alt="Sem imagem" class="news-card-image"></a>
+                        @endif
+                        <div class="news-card-content">
+                            <span class="news-card-date">{{ $noticia->data_publicacao ? $noticia->data_publicacao->format('d/m/Y') : $noticia->created_at->format('d/m/Y') }}</span>
+                            <h3 class="news-card-title">{{ $noticia->titulo }}</h3>
+                            <p class="news-card-summary">{{ Str::limit($noticia->resumo, 130) }}</p>
+                            <a href="{{ route('noticias.show', $noticia->id) }}" class="news-card-link">Ler mais <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </article>
                 @endforeach
             </div>
         @else
-            <p class="text-center text-gray-500 text-lg mt-10">Nenhuma notícia publicada ainda.</p>
+            <p class="placeholder-text">Nenhuma notícia publicada ainda.</p>
         @endif
     </div>
 </section>
 
-<section id="projetos" class="py-16 md:py-20 bg-gray-50">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-12 md:mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-3">Projetos e Ações em Andamento</h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">Conheça as principais iniciativas que estão transformando nossa cidade.</p>
+{{-- EVENTOS --}}
+<section id="eventos" class="section bg-white">
+    <div class="container">
+        <div class="section-header">
+            <h2>Agenda de Eventos</h2>
+            <p>Participe dos próximos eventos, workshops e atividades.</p>
         </div>
-
-        <div class="space-y-12 md:space-y-16">
-            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div>
-                    <img src="{{ asset('img/exemplo.jpg') }}" alt="Imagem do Projeto 1" class="rounded-lg shadow-lg w-full h-80 object-cover">
-                </div>
-                <div class="text-center md:text-left">
-                    <span class="text-sm font-semibold text-blue-600">INFRAESTRUTURA</span>
-                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mt-2 mb-4">Título do Projeto Genérico</h3>
-                    <p class="text-gray-600 mb-6">
-                        Descrição do projeto, explicando seus objetivos, o público-alvo e os benefícios esperados para a comunidade. Este texto deve ser conciso e informativo, destacando o impacto positivo da ação.
-                    </p>
-                    <a href="#" class="bg-blue-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-800 transition inline-block no-underline">
-                        Saiba Mais
-                    </a>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div class="md:order-last">
-                    <img src="{{ asset('img/exemplo2.jpg') }}" alt="Imagem do Projeto 2" class="rounded-lg shadow-lg w-full h-80 object-cover">
-                </div>
-                <div class="text-center md:text-left">
-                    <span class="text-sm font-semibold text-blue-600">DESENVOLVIMENTO SOCIAL</span>
-                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mt-2 mb-4">Outra Iniciativa Importante</h3>
-                    <p class="text-gray-600 mb-6">
-                        Outra descrição de um projeto, com foco em uma área diferente. A alternância de imagem e texto cria uma dinâmica visual interessante na página, mantendo o usuário engajado.
-                    </p>
-                    <a href="#" class="bg-blue-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-800 transition inline-block no-underline">
-                        Saiba Mais
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="eventos" class="py-16 md:py-20 bg-white">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-3">Agenda de Eventos</h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">Participe dos próximos eventos, workshops e atividades.</p>
-        </div>
-        <div class="max-w-5xl mx-auto">
-            @if($eventos->count() > 0)
-                <ul class="space-y-6">
+        <div class="events-container">
+            @if(isset($eventos) && $eventos->count() > 0)
+                <ul class="events-list">
                     @foreach($eventos as $evento)
                         <li class="event-card">
                             <div class="event-date">
                                 <div>{{ $evento->data_evento->format('d') }}</div>
                                 <div>{{ $evento->data_evento->format('M') }}</div>
                             </div>
-
                             <div class="event-content">
                                 <h3 class="event-title">{{ $evento->titulo }}</h3>
-                                
                                 <div class="event-details-grid">
                                     <div class="event-info">
                                         <p><i class="fas fa-clock"></i><strong>Horário:</strong> {{ $evento->data_evento->format('H:i') }}</p>
                                         <p><i class="fas fa-map-marker-alt"></i><strong>Local:</strong> {{ $evento->local }}</p>
                                     </div>
-
                                     @if($evento->descricao)
                                         <div class="event-description">
                                             <p>{{ $evento->descricao }}</p>
@@ -182,9 +174,82 @@
                     @endforeach
                 </ul>
             @else
-                <p class="text-center text-gray-500 py-10">Nenhum evento agendado no momento.</p>
+                <p class="placeholder-text">Nenhum evento agendado no momento.</p>
             @endif
         </div>
+    </div>
+</section>
+
+{{-- LEGISLAÇÃO --}}
+<section id="legislacao" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Legislação Pertinente</h2>
+            <p>Acesse leis, decretos e documentos importantes.</p>
+        </div>
+        @if(isset($legislacoes) && $legislacoes->count() > 0)
+            <div class="legislation-container">
+                <ul class="legislation-list">
+                    @foreach($legislacoes as $legislacao)
+                        <li class="legislation-item">
+                            <div>
+                                <h3>{{ $legislacao->titulo }}</h3>
+                                @if($legislacao->data_publicacao)
+                                    <p>Publicado em: {{ $legislacao->data_publicacao->format('d/m/Y') }}</p>
+                                @endif
+                            </div>
+                            <a href="{{ asset('storage/' . $legislacao->arquivo) }}" target="_blank" class="download-button">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @else
+            <p class="placeholder-text">Nenhum documento publicado.</p>
+        @endif
+    </div>
+</section>
+
+{{-- CANAIS DE ATENDIMENTO --}}
+<section id="atendimento" class="cta-section">
+    <div class="container">
+        <h2>Canais de Atendimento</h2>
+        <p>Sua opinião é importante. Entre em contato conosco.</p>
+        <div class="cta-buttons">
+             <a href="#" class="btn btn-primary">Fale Conosco</a>
+        </div>
+    </div>
+</section>
+
+{{-- FAQ --}}
+<section id="faq" class="section bg-white">
+    <div class="container">
+        <div class="section-header">
+            <h2>Perguntas Frequentes</h2>
+            <p>Tire suas dúvidas sobre nossos serviços e programas.</p>
+        </div>
+        @if(isset($faqs) && $faqs->count() > 0)
+            <div class="faq-container" x-data="{ open: null }">
+                @foreach($faqs as $faq)
+                    <div class="faq-item">
+                        <h2>
+                            <button @click="open = (open === '{{ $faq->id }}' ? null : '{{ $faq->id }}')" class="faq-question">
+                                <span>{{ $faq->pergunta }}</span>
+                                <i class="fas fa-xs" :class="open === '{{ $faq->id }}' ? 'fa-minus' : 'fa-plus'"></i>
+                            </button>
+                        </h2>
+                        <div x-show="open === '{{ $faq->id }}'" x-collapse.duration.500ms class="faq-answer">
+                            <div>
+                               <p>{{ $faq->resposta }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+             <p class="placeholder-text">Nenhuma pergunta frequente cadastrada.</p>
+        @endif
     </div>
 </section>
 
