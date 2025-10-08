@@ -47,6 +47,20 @@
 
     <!-- Categoria removida: todas as notícias são da Assistência Social -->
 
+    <!-- Buscar -->
+    <div class="mb-8 flex items-center justify-between">
+      <form method="GET" action="{{ route('noticias.index') }}" class="flex w-full max-w-xl">
+        <input type="text" name="q" value="{{ old('q', $q ?? '') }}" placeholder="Pesquisar notícias..." class="w-full p-3 rounded-l border border-gray-200" />
+        <button type="submit" class="bg-blue-600 text-white px-4 rounded-r">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        @if(!empty($q ?? ''))
+          <a href="{{ route('noticias.index') }}" class="ml-3 text-sm text-gray-600 underline">Limpar</a>
+        @endif
+      </form>
+      <div class="text-sm text-gray-600 ml-4">{{ $noticias->total() }} resultado(s)</div>
+    </div>
+
     @if($noticias->count() > 0)
       <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-8">
         @foreach($noticias as $noticia)
@@ -94,10 +108,62 @@
         @endforeach
       </div>
 
-      <!-- Paginação -->
-      <div class="mt-12">
-        {{ $noticias->links('pagination::tailwind') }}
-      </div>
+      <!-- Paginação personalizada -->
+      @if($noticias->lastPage() > 1)
+        <nav class="mt-12 flex items-center justify-center" role="navigation" aria-label="Pagination Navigation">
+          <ul class="inline-flex items-center space-x-2">
+            {{-- Previous --}}
+            <li>
+              @if($noticias->onFirstPage())
+                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded"><i class="fa-solid fa-chevron-left"></i></span>
+              @else
+                <a href="{{ $noticias->previousPageUrl() }}" class="px-3 py-2 bg-white border rounded hover:bg-gray-50"><i class="fa-solid fa-chevron-left"></i></a>
+              @endif
+            </li>
+
+            {{-- Page numbers (compact window) --}}
+            @php
+              $last = $noticias->lastPage();
+              $current = $noticias->currentPage();
+              $start = max(1, $current - 2);
+              $end = min($last, $current + 2);
+            @endphp
+
+            @if($start > 1)
+              <li><a href="{{ $noticias->url(1) }}" class="px-3 py-2 bg-white border rounded">1</a></li>
+              @if($start > 2)
+                <li class="px-2 text-gray-500">…</li>
+              @endif
+            @endif
+
+            @for($i = $start; $i <= $end; $i++)
+              <li>
+                @if($i == $current)
+                  <span class="px-3 py-2 bg-blue-600 text-white rounded">{{ $i }}</span>
+                @else
+                  <a href="{{ $noticias->url($i) }}" class="px-3 py-2 bg-white border rounded hover:bg-gray-50">{{ $i }}</a>
+                @endif
+              </li>
+            @endfor
+
+            @if($end < $last)
+              @if($end < $last - 1)
+                <li class="px-2 text-gray-500">…</li>
+              @endif
+              <li><a href="{{ $noticias->url($last) }}" class="px-3 py-2 bg-white border rounded">{{ $last }}</a></li>
+            @endif
+
+            {{-- Next --}}
+            <li>
+              @if($noticias->hasMorePages())
+                <a href="{{ $noticias->nextPageUrl() }}" class="px-3 py-2 bg-white border rounded hover:bg-gray-50"><i class="fa-solid fa-chevron-right"></i></a>
+              @else
+                <span class="px-3 py-2 bg-gray-200 text-gray-400 rounded"><i class="fa-solid fa-chevron-right"></i></span>
+              @endif
+            </li>
+          </ul>
+        </nav>
+      @endif
     @else
       <div class="text-center py-24 text-gray-500">
         <i class="fa-regular fa-newspaper text-6xl mb-4"></i>

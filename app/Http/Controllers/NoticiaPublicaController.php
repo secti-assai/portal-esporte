@@ -12,8 +12,25 @@ class NoticiaPublicaController extends Controller
      */
 public function index(Request $request)
 {
-    $noticias = Noticia::where('status', 'publicada')->orderBy('data_publicacao', 'desc')->paginate(6);
-    return view('noticias.noticias-index', compact('noticias'));
+    $q = trim($request->query('q', ''));
+
+    $query = Noticia::where('status', 'publicada');
+
+    if ($q !== '') {
+        // escape LIKE wildcards
+        $escaped = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], mb_strtolower($q));
+        $like = "%{$escaped}%";
+
+        $query->where(function($sub) use ($like) {
+            $sub->whereRaw('LOWER(titulo) LIKE ?', [$like])
+                ->orWhereRaw('LOWER(resumo) LIKE ?', [$like])
+                ->orWhereRaw('LOWER(conteudo) LIKE ?', [$like]);
+        });
+    }
+
+    $noticias = $query->orderBy('data_publicacao', 'desc')->paginate(9)->withQueryString();
+
+    return view('noticias.noticias-index', compact('noticias', 'q'));
 }
 
 
