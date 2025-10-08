@@ -10,7 +10,7 @@ class LinkRapidoController extends Controller
 {
     public function index()
     {
-        $links = LinkRapido::all();
+        $links = LinkRapido::where('portal', config('portal.key'))->get();
         return view('admin.links-rapidos.index', compact('links'));
     }
 
@@ -28,7 +28,9 @@ class LinkRapidoController extends Controller
             'url' => 'required|url',
             'icone' => 'required|string',
         ]);
-        LinkRapido::create($request->all());
+    $data = $request->all();
+    $data['portal'] = config('portal.key');
+    LinkRapido::create($data);
         return redirect()->route('admin.links-rapidos.index')->with('ok', 'Link rápido criado!');
     }
 
@@ -47,7 +49,9 @@ class LinkRapidoController extends Controller
             'url' => 'required|url',
             'icone' => 'required|string',
         ]);
-        $links_rapido->update($request->all());
+    $data = $request->all();
+    $data['portal'] = $links_rapido->portal ?? config('portal.key');
+    $links_rapido->update($data);
         return redirect()->route('admin.links-rapidos.index')->with('ok', 'Link rápido atualizado!');
     }
 

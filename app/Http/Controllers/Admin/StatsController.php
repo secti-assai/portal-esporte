@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\PageView;
 use App\Models\Noticia;
 use App\Models\Evento;
-use App\Models\Categoria;
 use App\Models\Local;
 use App\Models\LinkRapido;
 use App\Models\Faq;
@@ -22,9 +21,9 @@ class StatsController extends Controller
     {
         return response()->json([
             'users' => User::count(),
-            'noticias' => Noticia::count(),
+            'noticias' => Noticia::where('portal', config('portal.key'))->count(),
             'eventos' => Evento::count(),
-            'categorias' => Categoria::count(),
+            // categorias deixaram de ser usadas (categoria fixa)
             'locais' => Local::count(),
             'links_rapidos' => LinkRapido::count(),
             'faqs' => Faq::count(),

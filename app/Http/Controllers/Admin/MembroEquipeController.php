@@ -11,7 +11,7 @@ class MembroEquipeController extends Controller
 {
     public function index()
     {
-        $membros = MembroEquipe::orderBy('ordem')->get();
+        $membros = MembroEquipe::where('portal', config('portal.key'))->orderBy('ordem')->get();
         return view('admin.equipe.index', compact('membros'));
     }
 
@@ -29,14 +29,15 @@ class MembroEquipeController extends Controller
             'ordem' => 'required|integer',
         ]);
 
-        $dados = $request->all();
+    $dados = $request->all();
+    $dados['portal'] = config('portal.key');
 
         if ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('equipe', 'public');
             $dados['foto'] = $path;
         }
 
-        MembroEquipe::create($dados);
+    MembroEquipe::create($dados);
         return redirect()->route('admin.equipe.index')->with('ok', 'Membro adicionado!');
     }
 
@@ -56,7 +57,8 @@ class MembroEquipeController extends Controller
             'ordem' => 'required|integer',
         ]);
 
-        $dados = $request->all();
+    $dados = $request->all();
+    $dados['portal'] = $equipe->portal ?? config('portal.key');
 
         if ($request->hasFile('foto')) {
             if ($equipe->foto && Storage::disk('public')->exists($equipe->foto)) {
@@ -66,7 +68,7 @@ class MembroEquipeController extends Controller
             $dados['foto'] = $path;
         }
 
-        $equipe->update($dados);
+    $equipe->update($dados);
         return redirect()->route('admin.equipe.index')->with('ok', 'Membro atualizado!');
     }
 

@@ -45,21 +45,7 @@
   <!-- Listagem -->
   <main class="max-w-6xl mx-auto px-6 py-12">
 
-    <!-- Filtro de Categorias -->
-    @if(isset($categorias) && $categorias->count())
-      <div class="mb-10 flex flex-wrap gap-3 justify-center">
-        <a href="{{ route('noticias.index') }}"
-           class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition">
-           Todas
-        </a>
-        @foreach($categorias as $cat)
-          <a href="{{ route('noticias.index', ['categoria' => $cat]) }}"
-             class="px-4 py-2 bg-gray-200 hover:bg-blue-100 text-gray-700 rounded-lg text-sm font-medium transition">
-             {{ $cat }}
-          </a>
-        @endforeach
-      </div>
-    @endif
+    <!-- Categoria removida: todas as notícias são da Assistência Social -->
 
     @if($noticias->count() > 0)
       <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-8">

@@ -10,7 +10,7 @@ class EventoController extends Controller
 {
     public function index()
     {
-        $eventos = Evento::orderBy('data_evento', 'desc')->get();
+        $eventos = Evento::where('portal', config('portal.key'))->orderBy('data_evento', 'desc')->get();
         return view('admin.eventos.index', compact('eventos'));
     }
 
@@ -28,7 +28,9 @@ class EventoController extends Controller
             'descricao' => 'nullable|string',
         ]);
 
-        Evento::create($request->all());
+    $data = $request->all();
+    $data['portal'] = config('portal.key');
+    Evento::create($data);
         return redirect()->route('admin.eventos.index')->with('ok', 'Evento criado com sucesso!');
     }
 
@@ -46,7 +48,9 @@ class EventoController extends Controller
             'descricao' => 'nullable|string',
         ]);
 
-        $evento->update($request->all());
+    $data = $request->all();
+    $data['portal'] = $evento->portal ?? config('portal.key');
+    $evento->update($data);
         return redirect()->route('admin.eventos.index')->with('ok', 'Evento atualizado com sucesso!');
     }
 

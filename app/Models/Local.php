@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\HasPortal;
 
 class Local extends Model
 {
     use HasFactory;
+    use HasPortal;
 
     protected $table = 'locais';
 
@@ -18,5 +20,6 @@ class Local extends Model
         'telefone',
         'horario_funcionamento',
         'servicos_oferecidos',
+        'portal',
     ];
 }

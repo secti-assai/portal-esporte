@@ -17,9 +17,31 @@
             <span class="text-xs text-gray-400">Portal da Assistência Social</span>
         </div>
 
+        <div class="px-3 mb-6">
+            <form method="POST" action="{{ route('admin.portal.switch') }}">
+                @csrf
+                <label class="text-xs text-gray-400">Portal</label>
+                @php $currentKey = $currentPortalKey ?? config('portal.key'); @endphp
+                <select name="portal_key" onchange="this.form.submit()" class="w-full mt-2 bg-gray-800 text-white p-2 rounded">
+                    @foreach(($portals ?? []) as $p)
+                        @php
+                            $pkey = data_get($p, 'key', '');
+                            $pname = data_get($p, 'name', '');
+                            $selected = ($currentKey === $pkey) ? 'selected' : '';
+                        @endphp
+                        <option value="{{ $pkey }}" {{ $selected }}>{{ $pname }}</option>
+                    @endforeach
+                </select>
+            </form>
+
+            @if(session('ok'))
+                <div class="mt-2 text-sm text-green-300">{{ session('ok') }}</div>
+            @endif
+        </div>
+
         <nav class="flex-1 space-y-1">
             <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Conteúdo</p>
-            
+
             <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard*') || request()->routeIs('admin.noticias*') ? 'active' : '' }}">
                 <i class="fas fa-newspaper fa-fw w-5 text-center"></i>
                 <span>Notícias</span>
@@ -28,10 +50,7 @@
                 <i class="fas fa-calendar-alt fa-fw w-5 text-center text-yellow-400"></i>
                 <span>Eventos</span>
             </a>
-            <a href="{{ route('admin.categorias.index') }}" class="nav-link {{ request()->routeIs('admin.categorias*') ? 'active' : '' }}">
-                <i class="fas fa-tags fa-fw w-5 text-center text-purple-400"></i>
-                <span>Categorias</span>
-            </a>
+            <!-- Categorias removidas (categoria fixa: Assistência Social) -->
             <a href="{{ route('admin.equipe.index') }}" class="nav-link {{ request()->routeIs('admin.equipe*') ? 'active' : '' }}">
                 <i class="fas fa-users fa-fw w-5 text-center text-orange-400"></i>
                 <span>Quem é Quem</span>

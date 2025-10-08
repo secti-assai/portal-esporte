@@ -12,17 +12,8 @@ class NoticiaPublicaController extends Controller
      */
 public function index(Request $request)
 {
-    $query = Noticia::where('status', 'publicada');
-
-    if ($request->filled('categoria')) {
-        $query->where('categoria', $request->categoria);
-    }
-
-    $noticias = $query->orderBy('data_publicacao', 'desc')->paginate(6);
-
-    $categorias = Noticia::whereNotNull('categoria')->distinct()->pluck('categoria');
-
-    return view('noticias.noticias-index', compact('noticias', 'categorias'));
+    $noticias = Noticia::where('status', 'publicada')->orderBy('data_publicacao', 'desc')->paginate(6);
+    return view('noticias.noticias-index', compact('noticias'));
 }
 
 

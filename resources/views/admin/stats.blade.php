@@ -76,8 +76,8 @@
         (async function(){
             const data = await fetchJson('{{ route('admin.api.stats.totals') }}');
             if(!data) return;
-            const labels = ['Users','Noticias','Eventos','Categorias','Locais','Links','Faqs','Legislações','Membros'];
-            const values = [data.users,data.noticias,data.eventos,data.categorias,data.locais,data.links_rapidos,data.faqs,data.legislacoes,data.membros_equipe];
+            const labels = ['Users','Noticias','Eventos','Locais','Links','Faqs','Legislações','Membros'];
+            const values = [data.users,data.noticias,data.eventos,data.locais,data.links_rapidos,data.faqs,data.legislacoes,data.membros_equipe];
 
             new Chart(document.getElementById('chartTotals'), {
                 type: 'bar',

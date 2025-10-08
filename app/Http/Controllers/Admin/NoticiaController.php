@@ -14,7 +14,7 @@ class NoticiaController extends Controller
      */
     public function index()
     {
-        $noticias = Noticia::orderBy('created_at', 'desc')->get();
+        $noticias = Noticia::where('portal', config('portal.key'))->orderBy('created_at', 'desc')->get();
         return view('admin.dashboard', compact('noticias'));
     }
 
@@ -33,15 +33,17 @@ class NoticiaController extends Controller
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'categoria' => 'nullable|string|max:255',
             'resumo' => 'required|string|max:500',
             'conteudo' => 'required',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'status' => 'required|in:rascunho,publicada',
         ]);
 
-        $noticia = new Noticia();
-        $noticia->categoria = $request->categoria;
+    $noticia = new Noticia();
+    // Forçar categoria fixa definida em config/portal.php
+    $noticia->categoria = config('portal.category', 'Assistência Social');
+    // Forçar portal (em caso de criação sem trigger)
+    $noticia->portal = config('portal.key');
         $noticia->titulo = $request->titulo;
         $noticia->resumo = $request->resumo;
         $noticia->conteudo = $request->conteudo;
@@ -82,13 +84,17 @@ class NoticiaController extends Controller
             'conteudo' => 'required',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'status' => 'required|in:rascunho,publicada',
-            'categoria_id' => 'nullable|exists:categorias,id',
         ]);
 
-        $noticia->titulo = $request->titulo;
+    $noticia->titulo = $request->titulo;
         $noticia->resumo = $request->resumo;
         $noticia->conteudo = $request->conteudo;
         $noticia->status = $request->status;
+
+    // Forçar categoria fixa definida em config/portal.php
+    $noticia->categoria = config('portal.category', 'Assistência Social');
+    // Garantir portal preservado/definido
+    $noticia->portal = $noticia->portal ?? config('portal.key');
 
         // Atualiza imagem se necessário
         if ($request->hasFile('imagem')) {
