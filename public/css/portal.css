@@ -6,14 +6,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
 :root {
-    --cor-principal: #1e3a8a; /* Azul mais forte */
-    --cor-secundaria: #3b82f6; /* Azul claro */
-    --cor-fundo: #f9fafb; /* Cinza bem claro (bg-gray-50) */
+    --cor-principal: #1e3a8a;
+    /* Azul mais forte */
+    --cor-secundaria: #3b82f6;
+    /* Azul claro */
+    --cor-fundo: #f9fafb;
+    /* Cinza bem claro (bg-gray-50) */
     --cor-fundo-branco: #ffffff;
-    --cor-texto-titulo: #111827; /* Cinza quase preto (text-gray-900) */
-    --cor-texto-paragrafo: #374151; /* Cinza escuro (text-gray-700) */
-    --cor-texto-suave: #6b7280; /* Cinza médio (text-gray-500) */
-    --cor-borda: #e5e7eb; /* Cinza claro (border-gray-200) */
+    --cor-texto-titulo: #111827;
+    /* Cinza quase preto (text-gray-900) */
+    --cor-texto-paragrafo: #374151;
+    /* Cinza escuro (text-gray-700) */
+    --cor-texto-suave: #6b7280;
+    /* Cinza médio (text-gray-500) */
+    --cor-borda: #e5e7eb;
+    /* Cinza claro (border-gray-200) */
     --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.06);
     --sombra-card-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
     --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -29,7 +36,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: var(--cor-texto-titulo);
     font-weight: 700;
 }
@@ -47,17 +59,39 @@ a {
     padding-right: 1.5rem;
 }
 
-@media (min-width: 640px) { .container { max-width: 640px; } }
-@media (min-width: 768px) { .container { max-width: 768px; } }
-@media (min-width: 1024px) { .container { max-width: 1024px; } }
-@media (min-width: 1280px) { .container { max-width: 1280px; } }
-
-.section {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
 }
 
-.bg-white { background-color: var(--cor-fundo-branco); }
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+.section {
+    padding-top: 3.5rem;
+    /* Espaçamento menor para mobile */
+    padding-bottom: 3.5rem;
+}
+
+.bg-white {
+    background-color: var(--cor-fundo-branco);
+}
 
 .section-header {
     text-align: center;
@@ -66,6 +100,7 @@ a {
 
 .section-header h2 {
     font-size: 1.875rem;
+    /* Tamanho para mobile */
     font-weight: 800;
     color: var(--cor-principal);
     margin-bottom: 0.75rem;
@@ -91,8 +126,9 @@ a {
     overflow: hidden;
     background-image: linear-gradient(to right, #1e3a8a, #2563eb);
     color: white;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 4rem;
+    /* Espaçamento menor para mobile */
+    padding-bottom: 4rem;
 }
 
 .hero-texture {
@@ -110,6 +146,7 @@ a {
 
 .hero-content h1 {
     font-size: 2.25rem;
+    /* Tamanho para mobile */
     font-weight: 800;
     margin-bottom: 1rem;
     color: white;
@@ -118,9 +155,7 @@ a {
 .hero-content p {
     font-size: 1.125rem;
     max-width: 48rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem auto;
     opacity: 0.9;
 }
 
@@ -146,8 +181,8 @@ a {
     border-radius: 9999px;
     margin: 0 auto 1rem auto;
     object-fit: cover;
-    border: 4px solid #bfdbfe; /* blue-200 */
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+    border: 4px solid #bfdbfe;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
 }
 
 .team-member-name {
@@ -166,7 +201,10 @@ a {
     color: var(--cor-texto-suave);
     margin-top: 0.5rem;
 }
-.team-member-contact i { margin-right: 0.5rem; }
+
+.team-member-contact i {
+    margin-right: 0.5rem;
+}
 
 /* === LOCATIONS SECTION (#locais) === */
 .locations-grid {
@@ -183,32 +221,90 @@ a {
     box-shadow: var(--sombra-card);
     transition: var(--transicao);
 }
-.location-card:hover { box-shadow: var(--sombra-card-hover); }
+
+.location-card:hover {
+    box-shadow: var(--sombra-card-hover);
+}
+
 .location-card h3 {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--cor-principal);
     margin-bottom: 0.75rem;
 }
+
 .location-info {
     display: flex;
     align-items: flex-start;
     margin-bottom: 0.5rem;
     color: var(--cor-texto-paragrafo);
 }
+
 .location-info i {
     width: 1.25rem;
     margin-top: 0.25rem;
     margin-right: 0.75rem;
     color: var(--cor-secundaria);
 }
+
 .map-link {
     font-weight: 600;
     color: var(--cor-secundaria);
 }
-.map-link:hover { text-decoration: underline; }
-.map-link i { font-size: 0.75rem; margin-left: 0.25rem; }
 
+.map-link:hover {
+    text-decoration: underline;
+}
+
+.map-link i {
+    font-size: 0.75rem;
+    margin-left: 0.25rem;
+}
+
+.location-services {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.services-title {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cor-texto-titulo);
+    margin-bottom: 0.5rem;
+}
+
+.services-title i {
+    color: var(--cor-principal);
+    margin-right: 0.5rem;
+}
+
+.services-list {
+    font-size: 0.9rem;
+    color: var(--cor-texto-paragrafo);
+    line-height: 1.6;
+    padding-left: 1.5rem;
+}
+
+/* Dentro da seção === LOCATIONS SECTION (#locais) === */
+
+.map-link {
+    font-weight: 600;
+    color: var(--cor-secundaria);
+    text-decoration: none;
+    /* Garante que não haja sublinhado */
+    transition: color 0.2s;
+    /* Adiciona uma transição suave */
+}
+
+.map-link:hover {
+    color: var(--cor-principal);
+    /* Muda para a cor principal ao passar o mouse */
+    text-decoration: none;
+    /* Garante que não apareça sublinhado no hover */
+}
 
 /* === SERVICES SECTION (#servicos) === */
 .services-grid {
@@ -220,17 +316,20 @@ a {
 .service-card {
     display: block;
     background-color: var(--cor-fundo);
-    padding: 2rem;
+    padding: 1.5rem;
+    /* Padding menor para mobile */
     border-radius: 0.75rem;
     box-shadow: var(--sombra-card);
     border: 1px solid var(--cor-borda);
     text-align: center;
     transition: var(--transicao);
 }
+
 .service-card:hover {
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -4px rgba(0, 0, 0, .1);
     transform: translateY(-0.5rem);
 }
+
 .service-card-icon {
     font-size: 2.25rem;
     color: var(--cor-secundaria);
@@ -240,17 +339,19 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #dbeafe; /* blue-100 */
+    background-color: #dbeafe;
     border-radius: 9999px;
     margin-left: auto;
     margin-right: auto;
 }
+
 .service-card h3 {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--cor-texto-titulo);
     margin-bottom: 0.5rem;
 }
+
 .service-card p {
     font-size: 0.875rem;
     color: var(--cor-texto-suave);
@@ -272,16 +373,22 @@ a {
     border: 1px solid var(--cor-borda);
     transition: var(--transicao);
 }
+
 .news-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--sombra-card-hover);
 }
+
 .news-card-image {
     width: 100%;
     height: 14rem;
     object-fit: cover;
 }
-.news-card-content { padding: 1.5rem; }
+
+.news-card-content {
+    padding: 1.5rem;
+}
+
 .news-card-date {
     display: block;
     font-size: 0.875rem;
@@ -289,6 +396,7 @@ a {
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
+
 .news-card-title {
     font-size: 1.25rem;
     font-weight: 700;
@@ -296,6 +404,7 @@ a {
     margin-bottom: 0.5rem;
     line-height: 1.3;
 }
+
 .news-card-summary {
     font-size: 0.875rem;
     color: var(--cor-texto-paragrafo);
@@ -305,31 +414,44 @@ a {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
 .news-card-link {
     font-weight: 600;
-    color: #1d4ed8; /* blue-700 */
+    color: #1d4ed8;
     transition: color 0.2s;
     display: flex;
     align-items: center;
     gap: 0.25rem;
 }
-.news-card-link:hover { color: var(--cor-principal); }
-.news-card-link i { font-size: 0.75rem; }
 
-/* === EVENTS SECTION (#eventos) === */
+.news-card-link:hover {
+    color: var(--cor-principal);
+}
+
+.news-card-link i {
+    font-size: 0.75rem;
+}
+
+/* === EVENTS SECTION (#eventos) === CÓDIGO CORRIGIDO E RESPONSIVO === */
 .events-container {
     max-width: 56rem;
     margin: 0 auto;
 }
+
 .events-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-.events-list li + li { margin-top: 1.5rem; }
 
+.events-list li+li {
+    margin-top: 1.5rem;
+}
+
+/* Base (Mobile) */
 .event-card {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     background-color: white;
     padding: 1.5rem;
@@ -338,39 +460,90 @@ a {
     border: 1px solid var(--cor-borda);
     transition: var(--transicao);
 }
+
 .event-card:hover {
     transform: translateY(-3px);
     box-shadow: var(--sombra-card-hover);
 }
-.event-date {
-    text-align: center;
-    margin-right: 1.5rem;
-    flex-shrink: 0;
-}
-.event-date div:first-child {
-    font-size: 1.875rem; font-weight: 800; color: var(--cor-secundaria); line-height: 1;
-}
-.event-date div:last-child {
-    font-size: 0.8rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;
-}
-.event-content { width: 100%; }
-.event-title {
-    font-size: 1.125rem; font-weight: 700; color: var(--cor-principal); margin-top: 0; margin-bottom: 0.75rem;
-}
-.event-details-grid {
-    display: grid; grid-template-columns: minmax(150px, 200px) 1fr; gap: 1.5rem; align-items: flex-start;
-}
-.event-info p {
-    display: flex; align-items: center; color: var(--cor-texto-titulo); font-size: 0.9rem; margin: 0.25rem 0;
-}
-.event-info p strong { margin-right: 0.25rem; }
-.event-info i { width: 1rem; margin-right: 0.625rem; color: var(--cor-texto-paragrafo); }
-.event-description {
-    font-size: 0.9rem; color: var(--cor-texto-paragrafo); line-height: 1.6; padding-left: 1.5rem; border-left: 1px solid var(--cor-borda);
-}
-.event-description p { margin: 0; font-size: inherit; }
 
-/* === LEGISLATION SECTION (#legislacao) === */
+.event-date {
+    margin: 0 0 1rem 0;
+    background: #f3f4f6;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.event-date div:first-child {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: var(--cor-secundaria);
+    line-height: 1;
+}
+
+.event-date div:last-child {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.event-content {
+    width: 100%;
+}
+
+.event-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--cor-principal);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.event-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.event-info p {
+    display: flex;
+    align-items: center;
+    color: var(--cor-texto-titulo);
+    font-size: 0.9rem;
+    margin: 0.25rem 0;
+}
+
+.event-info p strong {
+    margin-right: 0.25rem;
+}
+
+.event-info i {
+    width: 1rem;
+    margin-right: 0.625rem;
+    color: var(--cor-texto-paragrafo);
+}
+
+.event-description {
+    font-size: 0.9rem;
+    color: var(--cor-texto-paragrafo);
+    line-height: 1.6;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cor-borda);
+    overflow-wrap: break-word;
+    /* Garante que textos longos quebrem a linha */
+}
+
+.event-description p {
+    margin: 0;
+    font-size: inherit;
+}
+
+/* === LEGISLATION, CTA, FAQ SECTIONS (sem alterações) === */
 .legislation-container {
     max-width: 42rem;
     margin: 0 auto;
@@ -379,8 +552,17 @@ a {
     box-shadow: var(--sombra-card);
     border: 1px solid var(--cor-borda);
 }
-.legislation-list { list-style: none; padding: 0; margin: 0; }
-.legislation-list li + li { border-top: 1px solid var(--cor-borda); }
+
+.legislation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.legislation-list li+li {
+    border-top: 1px solid var(--cor-borda);
+}
+
 .legislation-item {
     display: flex;
     justify-content: space-between;
@@ -388,9 +570,22 @@ a {
     padding: 1rem 1.25rem;
     transition: background-color 0.2s;
 }
-.legislation-item:hover { background-color: var(--cor-fundo); }
-.legislation-item h3 { font-size: 1rem; font-weight: 600; color: var(--cor-texto-titulo); }
-.legislation-item p { font-size: 0.875rem; color: var(--cor-texto-suave); }
+
+.legislation-item:hover {
+    background-color: var(--cor-fundo);
+}
+
+.legislation-item h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cor-texto-titulo);
+}
+
+.legislation-item p {
+    font-size: 0.875rem;
+    color: var(--cor-texto-suave);
+}
+
 .download-button {
     margin-left: 1rem;
     flex-shrink: 0;
@@ -400,20 +595,44 @@ a {
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
     transition: background-color 0.2s;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
-.download-button:hover { background-color: var(--cor-principal); }
 
-/* === CTA SECTION (#atendimento) === */
+.download-button:hover {
+    background-color: var(--cor-principal);
+}
+
 .cta-section {
     padding: 4rem 0;
     background-color: var(--cor-principal);
     color: white;
 }
-.cta-section .container { text-align: center; }
-.cta-section h2 { font-size: 1.875rem; font-weight: 700; color: white; margin-bottom: 0.75rem; }
-.cta-section p { color: #dbeafe; font-size: 1.125rem; max-width: 42rem; margin: 0 auto 2rem auto; }
-.cta-buttons { display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+
+.cta-section .container {
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.75rem;
+}
+
+.cta-section p {
+    color: #dbeafe;
+    font-size: 1.125rem;
+    max-width: 42rem;
+    margin: 0 auto 2rem auto;
+}
+
+.cta-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
 .btn {
     font-weight: 700;
     padding: 0.75rem 2rem;
@@ -422,14 +641,39 @@ a {
     transition: var(--transicao);
     display: inline-block;
 }
-.btn-primary { background-color: white; color: var(--cor-principal); }
-.btn-primary:hover { background-color: #e5e7eb; }
-.btn-outline { border: 2px solid #60a5fa; color: white; }
-.btn-outline:hover { background-color: #1d4ed8; }
 
-/* === FAQ SECTION (#faq) === */
-.faq-container { max-width: 42rem; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-.faq-item { background-color: var(--cor-fundo); border: 1px solid var(--cor-borda); border-radius: 0.75rem; }
+.btn-primary {
+    background-color: white;
+    color: var(--cor-principal);
+}
+
+.btn-primary:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-outline {
+    border: 2px solid #60a5fa;
+    color: white;
+}
+
+.btn-outline:hover {
+    background-color: #1d4ed8;
+}
+
+.faq-container {
+    max-width: 42rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faq-item {
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 0.75rem;
+}
+
 .faq-question {
     width: 100%;
     display: flex;
@@ -441,58 +685,136 @@ a {
     border: none;
     cursor: pointer;
 }
-.faq-question span { font-weight: 600; color: var(--cor-texto-titulo); font-size: 1rem; }
-.faq-question i { transition: transform 0.3s; }
-.faq-answer { padding: 0 1rem 1rem 1rem; color: var(--cor-texto-paragrafo); }
-.faq-answer > div { border-top: 1px solid var(--cor-borda); padding-top: 0.75rem; }
 
-/* =========================================================
-   AJUSTES FINAIS - REMOVER SUBLINHADOS
-   ========================================================= */
+.faq-question span {
+    font-weight: 600;
+    color: var(--cor-texto-titulo);
+    font-size: 1rem;
+}
 
-/* * 1. Remove o sublinhado dos cards da seção "Serviços".
- * Como o card inteiro é um link (<a>), aplicamos a ele. 
-*/
+.faq-question i {
+    transition: transform 0.3s;
+}
+
+.faq-answer {
+    padding: 0 1rem 1rem 1rem;
+    color: var(--cor-texto-paragrafo);
+}
+
+.faq-answer>div {
+    border-top: 1px solid var(--cor-borda);
+    padding-top: 0.75rem;
+}
+
+/* === AJUSTES FINAIS - REMOVER SUBLINHADOS === */
 .service-card {
     text-decoration: none;
 }
 
-/* * 2. Remove o sublinhado do link "Ler mais" nas notícias.
- * É uma boa prática adicionar o sublinhado de volta no hover 
- * para indicar que é um link clicável.
-*/
 .news-card-link {
     text-decoration: none;
 }
+
 .news-card-link:hover {
     text-decoration: underline;
 }
 
-/* * 3. Remove o sublinhado do link que envolve a imagem da notícia.
- * Isso corrige o texto "Sem imagem" que aparece sublinhado.
-*/
-.news-card > a {
+.news-card>a {
     text-decoration: none;
 }
 
-/* === RESPONSIVIDADE === */
+/* =========================================================
+   RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================= */
+
+/* -- Breakpoint para Tablets (768px ou mais) -- */
 @media (min-width: 768px) {
-    .section { padding-top: 5rem; padding-bottom: 5rem; }
-    .hero-section { padding-top: 6rem; padding-bottom: 6rem; }
-    .hero-content h1 { font-size: 3rem; }
-    .hero-content p { font-size: 1.25rem; }
-    .section-header h2 { font-size: 2.25rem; }
-    .locations-grid { grid-template-columns: repeat(2, 1fr); }
-    .services-grid { grid-template-columns: repeat(2, 1fr); }
-    .news-grid { grid-template-columns: repeat(2, 1fr); }
-    .cta-buttons { flex-direction: row; }
-    .event-card { flex-direction: row; align-items: flex-start; }
-    .event-date { margin: 0 1.5rem 0 0; background: none; padding: 0; display: block; }
-    .event-details-grid { grid-template-columns: minmax(150px, 200px) 1fr; }
-    .event-description { margin-top: 0; padding-top: 0; padding-left: 1.5rem; border-left: 1px solid var(--cor-borda); border-top: none; }
+
+    /* 1. Aumenta o espaçamento das seções */
+    .section {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+
+    .hero-section {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+    }
+
+    /* 2. Aumenta o tamanho dos títulos */
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .hero-content p {
+        font-size: 1.25rem;
+    }
+
+    .section-header h2 {
+        font-size: 2.25rem;
+    }
+
+    /* 3. Ajusta o layout das grades */
+    .locations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 4. Melhora a grade da equipe para ser mais flexível */
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    /* 5. Ajusta o layout dos botões e eventos */
+    .cta-buttons {
+        flex-direction: row;
+    }
+
+    .event-card {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .event-date {
+        margin: 0 1.5rem 0 0;
+        background: none;
+        padding: 0;
+        display: block;
+        text-align: center;
+    }
+
+    .event-details-grid {
+        grid-template-columns: minmax(150px, 200px) 1fr;
+        gap: 1.5rem;
+    }
+
+    .event-description {
+        margin-top: 0;
+        padding-top: 0;
+        padding-left: 1.5rem;
+        border-left: 1px solid var(--cor-borda);
+        border-top: none;
+    }
 }
 
+/* -- Breakpoint para Desktops (1024px ou mais) -- */
 @media (min-width: 1024px) {
-    .services-grid { grid-template-columns: repeat(4, 1fr); }
-    .news-grid { grid-template-columns: repeat(3, 1fr); }
+
+    /* Ajusta as grades para mais colunas em telas largas */
+    .services-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .news-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
