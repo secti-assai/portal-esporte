@@ -56,9 +56,7 @@
     <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80"></div>
 
     <div class="relative z-10 max-w-5xl mx-auto text-center py-20 px-6">
-      @if($noticia->categoria)
-        <p class="text-sm uppercase text-blue-200 tracking-widest mb-2">{{ $noticia->categoria }}</p>
-      @endif
+      {{-- Categoria removida (Assitência Social) --}}
       <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">{{ $noticia->titulo }}</h1>
       <p class="text-blue-100 text-sm flex justify-center items-center gap-4">
         <span><i class="fa-regular fa-calendar"></i> {{ \Carbon\Carbon::parse($noticia->data_publicacao)->format('d/m/Y H:i') }}</span>

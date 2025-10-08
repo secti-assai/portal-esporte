@@ -27,6 +27,9 @@
             @method('PUT')
         @endif
 
+    <!-- Categoria fixa enviada como hidden para compatibilidade -->
+    <input type="hidden" name="categoria" value="{{ old('categoria', $noticia->categoria ?? config('portal.category')) }}">
+
         <!-- Título -->
         <div>
             <label class="block text-sm font-semibold mb-2 text-gray-700">Título da Notícia</label>
@@ -99,23 +102,7 @@
     </form>
 </div>
 <!-- Categoria -->
-<!-- Categoria -->
-<div>
-  <label class="block text-sm font-semibold mb-2 text-gray-700">Categoria</label>
-  <select name="categoria_id"
-          class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500">
-      <option value="">Selecione uma categoria</option>
-      @foreach(\App\Models\Categoria::orderBy('nome')->get() as $cat)
-          <option value="{{ $cat->id }}"
-            {{ old('categoria_id', $noticia->categoria_id ?? '') == $cat->id ? 'selected' : '' }}>
-            {{ $cat->nome }}
-          </option>
-      @endforeach
-  </select>
-  <p class="text-xs text-gray-500 mt-1">
-      <a href="{{ route('admin.categorias.index') }}" class="text-blue-600 hover:underline">Gerenciar categorias</a>
-  </p>
-</div>
+<!-- Categoria removida: todas as notícias serão marcadas como 'Assistência Social' automaticamente -->
 
 
 <script src="https://cdn.jsdelivr.net/npm/tinymce@7.2.1/tinymce.min.js"></script>

@@ -10,7 +10,7 @@ class LocalController extends Controller
 {
     public function index()
     {
-        $locais = Local::orderBy('nome')->get();
+        $locais = Local::where('portal', config('portal.key'))->orderBy('nome')->get();
         return view('admin.locais.index', compact('locais'));
     }
 
@@ -25,7 +25,9 @@ class LocalController extends Controller
             'nome' => 'required|string|max:255',
             'endereco' => 'required|string|max:1000',
         ]);
-        Local::create($request->all());
+    $data = $request->all();
+    $data['portal'] = config('portal.key');
+    Local::create($data);
         return redirect()->route('admin.locais.index')->with('ok', 'Local adicionado!');
     }
 
@@ -40,7 +42,9 @@ class LocalController extends Controller
             'nome' => 'required|string|max:255',
             'endereco' => 'required|string|max:1000',
         ]);
-        $local->update($request->all());
+    $data = $request->all();
+    $data['portal'] = $local->portal ?? config('portal.key');
+    $local->update($data);
         return redirect()->route('admin.locais.index')->with('ok', 'Local atualizado!');
     }
 
@@ -55,9 +59,10 @@ class LocalController extends Controller
      */
     public function getLocais()
     {
-        $locais = Local::select('id', 'nome', 'endereco')
-                      ->orderBy('nome')
-                      ->get()
+    $locais = Local::where('portal', config('portal.key'))
+              ->select('id', 'nome', 'endereco')
+              ->orderBy('nome')
+              ->get()
                       ->map(function($local) {
                           return [
                               'id' => $local->id,
@@ -66,7 +71,7 @@ class LocalController extends Controller
                               'endereco' => $local->endereco
                           ];
                       });
-        
+
         return response()->json($locais);
     }
 }

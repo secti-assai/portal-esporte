@@ -111,6 +111,9 @@ Route::middleware(['admin.auth'])
         // API para buscar locais dinamicamente
         Route::get('/api/locais', [LocalController::class, 'getLocais'])->name('api.locais');
 
+    // Alternar portal (grava na sessão)
+    Route::post('/portal/switch', [\App\Http\Controllers\Admin\PortalController::class, 'switch'])->name('portal.switch');
+
     // Página de Estatísticas/BI
     Route::get('/stats', [\App\Http\Controllers\Admin\StatsController::class, 'index'])->name('stats');
 
