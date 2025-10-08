@@ -41,6 +41,13 @@ public function index(Request $request)
             ->take(3)
             ->get();
 
+        // registra page view para esta rota
+        try {
+            \App\Models\PageView::firstOrCreate(['path' => "noticias/{$id}"])->increment('view_count');
+        } catch (\Throwable $e) {
+            // silently ignore
+        }
+
         return view('noticias.noticia-show', compact('noticia', 'relacionadas'));
     }
 }

@@ -23,13 +23,15 @@ use App\Http\Controllers\Admin\FaqController;
 | 🌐 ROTAS PÚBLICAS - PORTAL
 |--------------------------------------------------------------------------
 */
-Route::get('/', [PortalController::class, 'index'])->name('home');
+Route::middleware(['page.view'])->group(function () {
+    Route::get('/', [PortalController::class, 'index'])->name('home');
 
-/**
- * Página pública de notícias
- */
-Route::get('/noticias', [NoticiaPublicaController::class, 'index'])->name('noticias.index');
-Route::get('/noticias/{id}', [NoticiaPublicaController::class, 'show'])->name('noticias.show');
+    /**
+     * Página pública de notícias
+     */
+    Route::get('/noticias', [NoticiaPublicaController::class, 'index'])->name('noticias.index');
+    Route::get('/noticias/{id}', [NoticiaPublicaController::class, 'show'])->name('noticias.show');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +92,7 @@ Route::middleware(['admin.auth'])
 
         // CRUD de Notícias
         Route::resource('noticias', NoticiaController::class)->except(['show', 'index']);
-      
+
         // CRUD de Eventos
         Route::resource('eventos', EventoController::class)->except(['show']);
 
@@ -105,7 +107,15 @@ Route::middleware(['admin.auth'])
         Route::resource('links-rapidos', LinkRapidoController::class)->except(['show']);
         Route::resource('legislacoes', LegislacaoController::class)->except(['show']);
         Route::resource('faqs', FaqController::class)->except(['show']);
-        
+
         // API para buscar locais dinamicamente
         Route::get('/api/locais', [LocalController::class, 'getLocais'])->name('api.locais');
+
+    // Página de Estatísticas/BI
+    Route::get('/stats', [\App\Http\Controllers\Admin\StatsController::class, 'index'])->name('stats');
+
+    // Endpoints de estatísticas/BI
+    Route::get('/api/stats/totals', [\App\Http\Controllers\Admin\StatsController::class, 'totals'])->name('api.stats.totals');
+    Route::get('/api/stats/top-pages', [\App\Http\Controllers\Admin\StatsController::class, 'topPages'])->name('api.stats.top_pages');
+    Route::get('/api/stats/views-over-time', [\App\Http\Controllers\Admin\StatsController::class, 'viewsOverTime'])->name('api.stats.views_over_time');
     });

@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Illuminate\Foundation\Configuration\Middleware $middleware) {
     $middleware->alias([
         'admin.auth' => \App\Http\Middleware\AdminAuth::class,
+        'page.view' => \App\Http\Middleware\RegisterPageView::class,
     ]);
 })
 
