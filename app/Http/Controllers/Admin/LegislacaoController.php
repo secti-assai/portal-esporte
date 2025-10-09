@@ -11,7 +11,7 @@ class LegislacaoController extends Controller
 {
     public function index()
     {
-        $legislacoes = Legislacao::where('portal', config('portal.key'))->orderBy('data_publicacao', 'desc')->get();
+        $legislacoes = Legislacao::orderBy('data_publicacao', 'desc')->get();
         return view('admin.legislacoes.index', compact('legislacoes'));
     }
 
@@ -30,7 +30,6 @@ class LegislacaoController extends Controller
         ]);
     $path = $request->file('arquivo')->store('legislacoes', 'public');
     $data = $request->except('arquivo') + ['arquivo' => $path];
-    $data['portal'] = config('portal.key');
     Legislacao::create($data);
         return redirect()->route('admin.legislacoes.index')->with('ok', 'Documento adicionado!');
     }
@@ -57,7 +56,6 @@ class LegislacaoController extends Controller
             $path = $request->file('arquivo')->store('legislacoes', 'public');
             $dados['arquivo'] = $path;
         }
-    $dados['portal'] = $legislaco->portal ?? config('portal.key');
     $legislaco->update($dados);
         return redirect()->route('admin.legislacoes.index')->with('ok', 'Documento atualizado!');
     }

@@ -48,7 +48,7 @@
     <!-- Categoria removida: todas as notícias são da Assistência Social -->
 
     <!-- Buscar -->
-    <div class="mb-8 flex items-center justify-between">
+    <div class="mb-8 flex items-center justify-center space-x-4">
       <form method="GET" action="{{ route('noticias.index') }}" class="flex w-full max-w-xl">
         <input type="text" name="q" value="{{ old('q', $q ?? '') }}" placeholder="Pesquisar notícias..." class="w-full p-3 rounded-l border border-gray-200" />
         <button type="submit" class="bg-blue-600 text-white px-4 rounded-r">
@@ -58,7 +58,7 @@
           <a href="{{ route('noticias.index') }}" class="ml-3 text-sm text-gray-600 underline">Limpar</a>
         @endif
       </form>
-      <div class="text-sm text-gray-600 ml-4">{{ $noticias->total() }} resultado(s)</div>
+      <div class="text-sm text-gray-600">{{ $noticias->total() }} resultado(s)</div>
     </div>
 
     @if($noticias->count() > 0)

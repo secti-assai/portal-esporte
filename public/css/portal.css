@@ -173,16 +173,22 @@ a {
     padding: 1.5rem;
     border-radius: 0.75rem;
     width: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%; /* Garante altura consistente */
 }
 
 .team-member-photo {
     width: 8rem;
     height: 8rem;
+    min-height: 8rem; /* Garante altura fixa */
     border-radius: 9999px;
     margin: 0 auto 1rem auto;
     object-fit: cover;
     border: 4px solid #bfdbfe;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -2px rgba(0, 0, 0, .1);
+    flex-shrink: 0; /* Evita que a foto encolha */
 }
 
 .team-member-name {
@@ -206,11 +212,93 @@ a {
     margin-right: 0.5rem;
 }
 
+/* =========================================================
+   ESTILOS HIERÁRQUICOS PARA EQUIPE (VERSÃO FINAL)
+   ========================================================= */
+
+/* Estilo Padrão (Nível 3) */
+.team-member-photo {
+    border-width: 4px;
+    border-color: #bfdbfe; /* Cor azul claro padrão */
+    transition: transform 0.3s ease;
+}
+
+.team-member-card:hover .team-member-photo {
+    transform: scale(1.05);
+}
+
+/* Nível 2 - Diretores, Coordenadores, etc. */
+.team-member-photo--level-2 {
+    border-color: var(--cor-principal);
+}
+
+/* Nível 1 - Secretários */
+.team-member-photo--level-1 {
+    border-color: #f59e0b;
+    border-width: 5px;
+}
+
+/* --- ESTILOS DO BADGE ATUALIZADOS --- */
+.team-member-badge {
+    display: block; /* Permite que o badge ocupe seu próprio espaço */
+    width: fit-content; /* Largura se ajusta ao conteúdo */
+    max-width: 100%; /* Garante que não ultrapasse o card */
+    margin: 1rem auto 0.5rem auto; /* Centraliza e adiciona espaçamento */
+    padding: 0.3rem 1rem;
+    border-radius: 6px; /* Cantos arredondados, não mais uma pílula */
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: normal; /* IMPORTANTE: Permite a quebra de linha */
+    text-align: center; /* Centraliza o texto caso ele quebre em duas linhas */
+    line-height: 1.4;
+}
+
+.team-member-badge--level-1 {
+    background-color: #f59e0b; /* Dourado */
+    color: white;
+}
+
+.team-member-badge--level-2 {
+    background-color: var(--cor-principal); /* Azul Escuro */
+    color: white;
+}
+
+/* NOVO: Estilo padrão para os demais cargos */
+.team-member-badge--level-3 {
+    background-color: #e5e7eb; /* Cinza claro */
+    color: var(--cor-texto-paragrafo); /* Cor do texto escuro */
+}
+
+/* =========================================================
+   NOVO: ESTILO PARA A COROA DE NÍVEL 1
+   ========================================================= */
+
+/* Cria um container para a foto para posicionar a coroa */
+.team-photo-wrapper {
+    position: relative;
+    display: inline-block; /* Garante que o wrapper não ocupe a largura toda */
+}
+
+/* Estilos da coroa */
+.team-member-crown {
+    position: absolute;
+    top: -25px; /* Posição um pouco acima da foto */
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza a coroa horizontalmente */
+    font-size: 1.75rem; /* Tamanho do ícone */
+    color: #f59e0b; /* Mesma cor dourada da borda */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidade */
+    z-index: 3;
+}
+
 /* === LOCATIONS SECTION (#locais) === */
 .locations-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
+    justify-content: center; /* Centraliza os cards */
 }
 
 .location-card {
@@ -220,6 +308,10 @@ a {
     padding: 1.5rem;
     box-shadow: var(--sombra-card);
     transition: var(--transicao);
+    display: flex;
+    flex-direction: column;
+    width: 350px; /* Largura fixa */
+    min-height: 320px; /* Altura mínima (pode variar com conteúdo de serviços) */
 }
 
 .location-card:hover {
@@ -231,6 +323,7 @@ a {
     font-weight: 700;
     color: var(--cor-principal);
     margin-bottom: 0.75rem;
+    min-height: 2rem; /* Garante espaço consistente para títulos */
 }
 
 .location-info {
@@ -308,21 +401,24 @@ a {
 
 /* === SERVICES SECTION (#servicos) === */
 .services-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
+    justify-content: center; /* Centraliza os cards */
 }
 
 .service-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     background-color: var(--cor-fundo);
     padding: 1.5rem;
-    /* Padding menor para mobile */
     border-radius: 0.75rem;
     box-shadow: var(--sombra-card);
     border: 1px solid var(--cor-borda);
     text-align: center;
     transition: var(--transicao);
+    width: 280px; /* Largura fixa */
+    height: 280px; /* Altura fixa */
 }
 
 .service-card:hover {
@@ -336,6 +432,7 @@ a {
     margin-bottom: 1rem;
     width: 4rem;
     height: 4rem;
+    min-height: 4rem; /* Garante altura mínima */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -343,6 +440,7 @@ a {
     border-radius: 9999px;
     margin-left: auto;
     margin-right: auto;
+    flex-shrink: 0; /* Evita que o ícone encolha */
 }
 
 .service-card h3 {
@@ -350,19 +448,22 @@ a {
     font-weight: 700;
     color: var(--cor-texto-titulo);
     margin-bottom: 0.5rem;
+    min-height: 2.5rem; /* Garante espaço consistente para títulos */
 }
 
 .service-card p {
     font-size: 0.875rem;
     color: var(--cor-texto-suave);
+    flex-grow: 1; /* Permite que a descrição ocupe o espaço restante */
 }
 
 
 /* === NEWS SECTION (#noticias) === */
 .news-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 2.5rem;
+    justify-content: center; /* Centraliza os cards */
 }
 
 .news-card {
@@ -372,6 +473,10 @@ a {
     box-shadow: var(--sombra-card);
     border: 1px solid var(--cor-borda);
     transition: var(--transicao);
+    display: flex;
+    flex-direction: column;
+    width: 320px; /* Largura fixa */
+    height: 480px; /* Altura fixa */
 }
 
 .news-card:hover {
@@ -382,11 +487,16 @@ a {
 .news-card-image {
     width: 100%;
     height: 14rem;
+    min-height: 14rem; /* Garante altura fixa */
     object-fit: cover;
+    flex-shrink: 0; /* Evita que a imagem encolha */
 }
 
 .news-card-content {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permite que o conteúdo ocupe o espaço restante */
 }
 
 .news-card-date {
@@ -403,6 +513,7 @@ a {
     color: var(--cor-texto-titulo);
     margin-bottom: 0.5rem;
     line-height: 1.3;
+    min-height: 3rem; /* Garante espaço consistente para títulos (cerca de 2 linhas) */
 }
 
 .news-card-summary {
@@ -413,6 +524,7 @@ a {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    flex-grow: 1; /* Permite que o resumo ocupe o espaço disponível */
 }
 
 .news-card-link {
@@ -422,6 +534,7 @@ a {
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    margin-top: auto; /* Empurra o link para o final do card */
 }
 
 .news-card-link:hover {
@@ -432,7 +545,10 @@ a {
     font-size: 0.75rem;
 }
 
-/* === EVENTS SECTION (#eventos) === CÓDIGO CORRIGIDO E RESPONSIVO === */
+/* =========================================================
+   EVENTS SECTION (#eventos) - CÓDIGO ATUALIZADO E RESPONSIVO
+   ========================================================= */
+
 .events-container {
     max-width: 56rem;
     margin-left: auto;
@@ -448,9 +564,11 @@ a {
     gap: 1.5rem;
 }
 
+/* Base do Card do Evento (Mobile-first) */
 .event-card {
     display: flex;
-    flex-direction: column; /* Layout mobile-first */
+    flex-direction: row; /* Layout em linha para mobile e desktop */
+    align-items: flex-start; /* Alinha itens no topo */
     gap: 1rem;
     background-color: var(--cor-fundo-branco);
     padding: 1.5rem;
@@ -459,21 +577,20 @@ a {
     border: 1px solid var(--cor-borda);
     transition: var(--transicao);
 }
-
 .event-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--sombra-card-hover);
 }
 
+/* Bloco da Data (à esquerda) */
 .event-date {
     flex-shrink: 0;
     text-align: center;
     background-color: var(--cor-fundo);
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 0.5rem;
-    width: fit-content;
+    width: 4.5rem; /* Largura fixa para consistência */
 }
-
 .event-date span:first-child {
     display: block;
     font-size: 1.875rem;
@@ -481,7 +598,6 @@ a {
     color: var(--cor-principal);
     line-height: 1;
 }
-
 .event-date span:last-child {
     display: block;
     font-size: 0.75rem;
@@ -491,15 +607,16 @@ a {
     letter-spacing: 0.05em;
 }
 
+/* Bloco de Detalhes (à direita) */
 .event-details {
-    flex-grow: 1;
-    min-width: 0;
+    flex-grow: 1; /* Ocupa o espaço restante */
+    min-width: 0; /* Truque de flexbox para permitir quebra de linha em filhos */
 }
 
-/* NOVO: Wrapper para título e meta */
+/* Cabeçalho do Evento (Título + Meta) */
 .event-header {
     display: flex;
-    flex-direction: column; /* Empilhado no mobile para melhor leitura */
+    flex-direction: column; /* Título e Meta sempre empilhados */
     gap: 0.5rem;
     margin-bottom: 1rem;
 }
@@ -512,15 +629,13 @@ a {
     line-height: 1.3;
 }
 
-/* AJUSTADO: Container para horário e local */
+/* Meta (Horário e Local) */
 .event-meta {
     display: flex;
-    flex-wrap: wrap; /* Permite quebrar linha se não couber */
-    align-items: center;
-    gap: 1.25rem; /* Espaçamento entre horário e local */
-    flex-shrink: 0; /* Impede que seja esmagado pelo título */
+    flex-direction: column; /* Empilhado no mobile para economizar espaço */
+    align-items: flex-start;
+    gap: 0.5rem;
 }
-
 .event-meta p {
     display: flex;
     align-items: center;
@@ -528,41 +643,31 @@ a {
     color: var(--cor-texto-paragrafo);
     margin: 0;
 }
-
 .event-meta i {
     width: 1rem;
     margin-right: 0.5rem;
     color: var(--cor-secundaria);
 }
 
+/* Descrição */
 .event-description {
     font-size: 0.9rem;
     color: var(--cor-texto-paragrafo);
     line-height: 1.6;
     padding-top: 1rem;
     border-top: 1px solid var(--cor-borda);
-    overflow-wrap: break-word;
-    word-break: break-all;
+    overflow-wrap: break-word; /* Garante que textos longos quebrem a linha */
 }
 
-/* Ajustes no layout do evento para telas maiores */
+/* Ajustes para telas maiores */
 @media (min-width: 768px) {
     .event-card {
-        flex-direction: row;
-        align-items: flex-start;
         gap: 1.5rem;
     }
 
-    .event-date {
-        padding: 0.75rem;
-        width: 5rem;
-    }
-    
-    /* NOVO: Layout lado a lado para o cabeçalho */
-    .event-header {
+    /* No desktop, Horário e Local ficam lado a lado */
+    .event-meta {
         flex-direction: row;
-        justify-content: space-between; /* A MÁGICA ACONTECE AQUI */
-        align-items: flex-start;
         gap: 1.5rem;
     }
 }
@@ -816,6 +921,11 @@ a {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .service-card {
+    flex: 0 0 250px; /* Largura fixa ou mínima para os cards */
+    text-align: center; /* Centraliza o conteúdo dentro do card */
+    }
+
     .news-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -859,6 +969,19 @@ a {
     }
 }
 
+/* =========================================================
+   AJUSTE PARA CENTRALIZAR ITEM ÚNICO EM GRADES
+   ========================================================= */
+
+.equipe-grid,
+.locations-grid,
+.services-grid,
+.news-grid {
+    display: flex;
+    justify-content: center;
+}
+
+
 /* -- Breakpoint para Desktops (1024px ou mais) -- */
 @media (min-width: 1024px) {
 
@@ -868,6 +991,7 @@ a {
     }
 
     .news-grid {
-        grid-template-columns: repeat(3, 1fr);
+        /* Em telas largas permitimos mais colunas mantendo o comportamento responsivo */
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 }

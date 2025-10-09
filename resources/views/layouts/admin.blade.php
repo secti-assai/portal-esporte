@@ -17,28 +17,6 @@
             <span class="text-xs text-gray-400">Portal da Assistência Social</span>
         </div>
 
-        <div class="px-3 mb-6">
-            <form method="POST" action="{{ route('admin.portal.switch') }}">
-                @csrf
-                <label class="text-xs text-gray-400">Portal</label>
-                @php $currentKey = $currentPortalKey ?? config('portal.key'); @endphp
-                <select name="portal_key" onchange="this.form.submit()" class="w-full mt-2 bg-gray-800 text-white p-2 rounded">
-                    @foreach(($portals ?? []) as $p)
-                        @php
-                            $pkey = data_get($p, 'key', '');
-                            $pname = data_get($p, 'name', '');
-                            $selected = ($currentKey === $pkey) ? 'selected' : '';
-                        @endphp
-                        <option value="{{ $pkey }}" {{ $selected }}>{{ $pname }}</option>
-                    @endforeach
-                </select>
-            </form>
-
-            @if(session('ok'))
-                <div class="mt-2 text-sm text-green-300">{{ session('ok') }}</div>
-            @endif
-        </div>
-
         <nav class="flex-1 space-y-1">
             <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Conteúdo</p>
 
@@ -63,13 +41,18 @@
                 <i class="fas fa-link fa-fw w-5 text-center text-indigo-400"></i>
                 <span>Links Rápidos</span>
             </a>
-             <a href="{{ route('admin.legislacoes.index') }}" class="nav-link {{ request()->routeIs('admin.legislacoes*') ? 'active' : ''}}">
-                <i class="fas fa-gavel fa-fw w-5 text-center text-gray-400"></i>
-                <span>Legislação</span>
-            </a>
             <a href="{{ route('admin.faqs.index') }}" class="nav-link {{ request()->routeIs('admin.faqs*') ? 'active' : ''}}">
                 <i class="fas fa-question-circle fa-fw w-5 text-center text-pink-400"></i>
                 <span>FAQ</span>
+            </a>
+
+            <hr class="my-4 border-gray-700">
+
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 mt-4">Análise</p>
+
+            <a href="{{ route('admin.stats') }}" class="nav-link {{ request()->routeIs('admin.stats*') ? 'active' : ''}}">
+                <i class="fas fa-chart-line fa-fw w-5 text-center text-green-400"></i>
+                <span>Estatísticas & BI</span>
             </a>
 
             <hr class="my-4 border-gray-700">

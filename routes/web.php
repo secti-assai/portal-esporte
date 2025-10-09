@@ -111,8 +111,8 @@ Route::middleware(['admin.auth'])
         // API para buscar locais dinamicamente
         Route::get('/api/locais', [LocalController::class, 'getLocais'])->name('api.locais');
 
-    // Alternar portal (grava na sessão)
-    Route::post('/portal/switch', [\App\Http\Controllers\Admin\PortalController::class, 'switch'])->name('portal.switch');
+    // Alternar portal (desabilitado - portal fixo: Assistência Social)
+    // Route::post('/portal/switch', [\App\Http\Controllers\Admin\PortalController::class, 'switch'])->name('portal.switch');
 
     // Página de Estatísticas/BI
     Route::get('/stats', [\App\Http\Controllers\Admin\StatsController::class, 'index'])->name('stats');
@@ -121,4 +121,9 @@ Route::middleware(['admin.auth'])
     Route::get('/api/stats/totals', [\App\Http\Controllers\Admin\StatsController::class, 'totals'])->name('api.stats.totals');
     Route::get('/api/stats/top-pages', [\App\Http\Controllers\Admin\StatsController::class, 'topPages'])->name('api.stats.top_pages');
     Route::get('/api/stats/views-over-time', [\App\Http\Controllers\Admin\StatsController::class, 'viewsOverTime'])->name('api.stats.views_over_time');
+    Route::get('/api/stats/by-device', [\App\Http\Controllers\Admin\StatsController::class, 'byDevice'])->name('api.stats.by_device');
+    Route::get('/api/stats/hourly-last-24', [\App\Http\Controllers\Admin\StatsController::class, 'hourlyLast24'])->name('api.stats.hourly_last_24');
+    Route::get('/api/stats/top-pages-by-device', [\App\Http\Controllers\Admin\StatsController::class, 'topPagesByDevice'])->name('api.stats.top_pages_by_device');
+    Route::get('/api/stats/page-views-over-time', [\App\Http\Controllers\Admin\StatsController::class, 'pageViewsOverTime'])->name('api.stats.page_views_over_time');
+    Route::get('/api/stats/page-by-device', [\App\Http\Controllers\Admin\StatsController::class, 'pageByDevice'])->name('api.stats.page_by_device');
     });

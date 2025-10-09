@@ -21,18 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Share portals with all views (view composer)
+        // Define o portal fixo como Assistência Social
         View::composer('*', function ($view) {
-            try {
-                $portals = Portal::orderBy('name')->get();
-            } catch (\Throwable $e) {
-                // If the table doesn't exist yet (migrations not run), return empty to avoid breaking views
-                $portals = collect();
-            }
-
-            $currentPortalKey = session('portal_key') ?: config('portal.key');
-
-            $view->with('portals', $portals)->with('currentPortalKey', $currentPortalKey);
+            $currentPortalKey = config('portal.key', 'assistencia_social');
+            $view->with('currentPortalKey', $currentPortalKey);
         });
     }
 }

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        $tables = ['noticias','eventos','locals','link_rapidos','faqs','legislacaos','membro_equipes'];
+        $tables = ['noticias','eventos','locais','link_rapidos','faqs','legislacoes','membro_equipes'];
         foreach ($tables as $t) {
             if (Schema::hasTable($t) && !Schema::hasColumn($t, 'portal')) {
                 Schema::table($t, function (Blueprint $table) use ($t) {
@@ -20,7 +20,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        $tables = ['noticias','eventos','locals','link_rapidos','faqs','legislacaos','membro_equipes'];
+        $tables = ['noticias','eventos','locais','link_rapidos','faqs','legislacoes','membro_equipes'];
         foreach ($tables as $t) {
             if (Schema::hasTable($t) && Schema::hasColumn($t, 'portal')) {
                 Schema::table($t, function (Blueprint $table) {
