@@ -32,7 +32,36 @@
 
         <div>
             <label class="block text-sm font-semibold text-gray-700">Cargo *</label>
-            <input type="text" name="cargo" value="{{ old('cargo', $membro->cargo ?? '') }}" class="w-full mt-1 border border-gray-300 rounded-lg p-3" placeholder="Ex: Secretário(a) de Assistência Social" required>
+            @php
+                $cargos = [
+                    // Nível 1
+                    'Secretário(a) Municipal',
+                    'Secretário(a) Adjunto(a)',
+                    // Nível 2
+                    'Diretor(a) de Departamento',
+                    'Coordenador(a)',
+                    'Chefe de Divisão',
+                    'Assessor(a)',
+                    // Nível 3
+                    'Assistente Social',
+                    'Psicólogo(a)',
+                    'Técnico(a) Administrativo',
+                    'Agente Social',
+                    'Recepcionista',
+                ];
+                // Garante que o cargo atual (se existir e não estiver na lista) apareça como uma opção
+                if (isset($membro) && !in_array($membro->cargo, $cargos)) {
+                    $cargos[] = $membro->cargo;
+                }
+            @endphp
+            <select name="cargo" class="w-full mt-1 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500" required>
+                <option value="">Selecione um cargo...</option>
+                @foreach ($cargos as $cargo)
+                    <option value="{{ $cargo }}" {{ (old('cargo', $membro->cargo ?? '') == $cargo) ? 'selected' : '' }}>
+                        {{ $cargo }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

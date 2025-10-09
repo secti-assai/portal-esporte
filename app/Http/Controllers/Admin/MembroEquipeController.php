@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\MembroEquipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class MembroEquipeController extends Controller
 {
     public function index()
     {
-        $membros = MembroEquipe::where('portal', config('portal.key'))->orderBy('ordem')->get();
+        $membros = MembroEquipe::orderBy('ordem')->get();
         return view('admin.equipe.index', compact('membros'));
     }
 
@@ -20,25 +21,32 @@ class MembroEquipeController extends Controller
         return view('admin.equipe.form');
     }
 
+
     public function store(Request $request)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'ordem' => 'required|integer',
-        ]);
+    // Define a lista de cargos válidos
+    $cargosValidos = [
+        'Secretário(a) Municipal', 'Secretário(a) Adjunto(a)',
+        'Diretor(a) de Departamento', 'Coordenador(a)', 'Chefe de Divisão', 'Assessor(a)',
+        'Assistente Social', 'Psicólogo(a)', 'Técnico(a) Administrativo', 'Agente Social', 'Recepcionista',
+    ];
+
+    $request->validate([
+        'nome' => 'required|string|max:255',
+        'cargo' => ['required', Rule::in($cargosValidos)], // VALIDAÇÃO ATUALIZADA
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'ordem' => 'required|integer',
+    ]);
 
     $dados = $request->all();
-    $dados['portal'] = config('portal.key');
 
-        if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('equipe', 'public');
-            $dados['foto'] = $path;
-        }
+    if ($request->hasFile('foto')) {
+        $path = $request->file('foto')->store('equipe', 'public');
+        $dados['foto'] = $path;
+    }
 
     MembroEquipe::create($dados);
-        return redirect()->route('admin.equipe.index')->with('ok', 'Membro adicionado!');
+    return redirect()->route('admin.equipe.index')->with('ok', 'Membro adicionado!');
     }
 
     // CORRIGIDO AQUI: $membro foi renomeado para $equipe
@@ -50,26 +58,32 @@ class MembroEquipeController extends Controller
     // CORRIGIDO AQUI: $membro foi renomeado para $equipe
     public function update(Request $request, MembroEquipe $equipe)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'ordem' => 'required|integer',
-        ]);
+    // Define a lista de cargos válidos
+    $cargosValidos = [
+        'Secretário(a) Municipal', 'Secretário(a) Adjunto(a)',
+        'Diretor(a) de Departamento', 'Coordenador(a)', 'Chefe de Divisão', 'Assessor(a)',
+        'Assistente Social', 'Psicólogo(a)', 'Técnico(a) Administrativo', 'Agente Social', 'Recepcionista',
+    ];
+
+    $request->validate([
+        'nome' => 'required|string|max:255',
+        'cargo' => ['required', Rule::in($cargosValidos)], // VALIDAÇÃO ATUALIZADA
+        'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'ordem' => 'required|integer',
+    ]);
 
     $dados = $request->all();
-    $dados['portal'] = $equipe->portal ?? config('portal.key');
 
-        if ($request->hasFile('foto')) {
-            if ($equipe->foto && Storage::disk('public')->exists($equipe->foto)) {
-                Storage::disk('public')->delete($equipe->foto);
-            }
-            $path = $request->file('foto')->store('equipe', 'public');
-            $dados['foto'] = $path;
+    if ($request->hasFile('foto')) {
+        if ($equipe->foto && Storage::disk('public')->exists($equipe->foto)) {
+            Storage::disk('public')->delete($equipe->foto);
         }
+        $path = $request->file('foto')->store('equipe', 'public');
+        $dados['foto'] = $path;
+    }
 
     $equipe->update($dados);
-        return redirect()->route('admin.equipe.index')->with('ok', 'Membro atualizado!');
+    return redirect()->route('admin.equipe.index')->with('ok', 'Membro atualizado!');
     }
 
     // CORRIGIDO AQUI: $membro foi renomeado para $equipe

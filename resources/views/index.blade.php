@@ -30,16 +30,52 @@
 <section id="equipe" class="section bg-white">
     <div class="container">
         <div class="section-header">
-            <h2>Equipe</h2>
-            <p>Conheça os gestores da nossa secretaria.</p>
+            <h2>Gestão da Secretaria</h2>
+            <p>Conheça os profissionais que compõem nossa secretaria.</p>
         </div>
         @if(isset($equipe) && $equipe->count() > 0)
             <div class="team-grid">
+                @php
+                    // Define os cargos por nível de hierarquia
+                    $nivel1 = ['Secretário(a) Municipal', 'Secretário(a) Adjunto(a)'];
+                    $nivel2 = ['Diretor(a) de Departamento', 'Coordenador(a)', 'Chefe de Divisão', 'Assessor(a)'];
+                @endphp
+
                 @foreach($equipe as $membro)
+                    @php
+                        // Determina as classes da FOTO e do BADGE
+                        $levelClass = 'team-member-photo--level-3';
+                        $badgeClass = 'team-member-badge--level-3';
+                        $isLevel1 = in_array($membro->cargo, $nivel1);
+                        $isLevel2 = in_array($membro->cargo, $nivel2);
+
+                        if ($isLevel1) {
+                            $levelClass = 'team-member-photo--level-1';
+                            $badgeClass = 'team-member-badge--level-1';
+                        } elseif ($isLevel2) {
+                            $levelClass = 'team-member-photo--level-2';
+                            $badgeClass = 'team-member-badge--level-2';
+                        }
+                    @endphp
                     <div class="team-member-card">
-                        <img src="{{ $membro->foto ? asset('storage/' . $membro->foto) : 'https://via.placeholder.com/150' }}" alt="Foto de {{ $membro->nome }}" class="team-member-photo">
+                        {{-- NOVO: Wrapper para a foto e coroa --}}
+                        <div class="team-photo-wrapper">
+                            {{-- Adiciona a coroa se for Nível 1 --}}
+                            @if($isLevel1)
+                                <i class="fas fa-crown team-member-crown"></i>
+                            @endif
+
+                            <img src="{{ $membro->foto ? asset('storage/' . $membro->foto) : 'https://via.placeholder.com/150' }}" 
+                                alt="Foto de {{ $membro->nome }}" 
+                                class="team-member-photo {{ $levelClass }}">
+                        </div>
+
+                        <div class="team-member-badge {{ $badgeClass }}">
+                            {{ $membro->cargo }}
+                        </div>
+                        
                         <h3 class="team-member-name">{{ $membro->nome }}</h3>
-                        <p class="team-member-role">{{ $membro->cargo }}</p>
+                        
                         @if($membro->email)
                             <p class="team-member-contact"><i class="fas fa-envelope"></i>{{ $membro->email }}</p>
                         @endif
@@ -201,7 +237,7 @@
     <div class="container">
         <div class="section-header">
             <h2>Legislação</h2>
-            <p>Acesse leis, decretos e documentos importantes.</p>
+            <p>Acesse as leis.</p>
         </div>
 
         {{-- BOTÃO CENTRALIZADO (sempre visível) --}}
@@ -231,9 +267,6 @@
                     @endforeach
                 </ul>
             </div>
-        @else
-            {{-- Mensagem caso não haja documentos --}}
-            <p class="placeholder-text">Nenhum documento publicado diretamente no portal.</p>
         @endif
     </div>
 </section>

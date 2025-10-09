@@ -10,7 +10,7 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::where('portal', config('portal.key'))->orderBy('ordem')->get();
+        $faqs = Faq::orderBy('ordem')->get();
         return view('admin.faqs.index', compact('faqs'));
     }
 
@@ -27,7 +27,6 @@ class FaqController extends Controller
             'ordem' => 'required|integer',
         ]);
     $data = $request->all();
-    $data['portal'] = config('portal.key');
     Faq::create($data);
         return redirect()->route('admin.faqs.index')->with('ok', 'Pergunta adicionada!');
     }
@@ -45,7 +44,6 @@ class FaqController extends Controller
             'ordem' => 'required|integer',
         ]);
     $data = $request->all();
-    $data['portal'] = $faq->portal ?? config('portal.key');
     $faq->update($data);
         return redirect()->route('admin.faqs.index')->with('ok', 'Pergunta atualizada!');
     }

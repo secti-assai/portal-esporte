@@ -26,39 +26,13 @@ class PortalController extends Controller
         // --- NOVOS DADOS DINÂMICOS ---
         // Temporariamente usando dados estáticos até executar migrations
         try {
-            $links_rapidos = LinkRapido::take(4)->get();
+            $links_rapidos = LinkRapido::take(8)->get();
         } catch (\Exception $e) {
-            // Se a tabela não existe, usar dados estáticos
-            $links_rapidos = collect([
-                (object)[
-                    'titulo' => 'Agendamentos',
-                    'descricao_curta' => 'Marque consultas, matrículas ou atendimentos.',
-                    'url' => route('agendamentos.index'),
-                    'icone' => 'fas fa-file-alt'
-                ],
-                (object)[
-                    'titulo' => 'Calendário Oficial',
-                    'descricao_curta' => 'Confira as datas e eventos importantes.',
-                    'url' => route('calendario.index'),
-                    'icone' => 'fas fa-calendar-check'
-                ],
-                (object)[
-                    'titulo' => 'Editais e Licitações',
-                    'descricao_curta' => 'Acompanhe os processos de seleção e contratação.',
-                    'url' => route('editais.index'),
-                    'icone' => 'fas fa-bullhorn'
-                ],
-                (object)[
-                    'titulo' => 'Perguntas Frequentes',
-                    'descricao_curta' => 'Tire suas dúvidas de forma rápida e fácil.',
-                    'url' => route('faq.index'),
-                    'icone' => 'fas fa-info-circle'
-                ]
-            ]);
+            $links_rapidos = collect();
         }
         
         try {
-            $equipe = MembroEquipe::orderBy('id', 'asc')->get();
+            $equipe = MembroEquipe::orderBy('ordem', 'asc')->get();
         } catch (\Exception $e) {
             $equipe = collect();
         }
@@ -76,7 +50,7 @@ class PortalController extends Controller
         }
         
         try {
-            $faqs = Faq::orderBy('id', 'asc')->get();
+            $faqs = Faq::orderBy('ordem', 'asc')->get();
         } catch (\Exception $e) {
             $faqs = collect();
         }
