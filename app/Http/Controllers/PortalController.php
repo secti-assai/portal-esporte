@@ -24,7 +24,6 @@ class PortalController extends Controller
             ->take(5)->get();
 
         // --- NOVOS DADOS DINÂMICOS ---
-        // Temporariamente usando dados estáticos até executar migrations
         try {
             $links_rapidos = LinkRapido::take(8)->get();
         } catch (\Exception $e) {
@@ -32,7 +31,22 @@ class PortalController extends Controller
         }
         
         try {
-            $equipe = MembroEquipe::orderBy('ordem', 'asc')->get();
+            // Define a ordem hierárquica dos cargos
+            $ordemCargos = "
+                CASE
+                    WHEN cargo = 'Secretário(a) Municipal' THEN 1
+                    WHEN cargo = 'Secretário(a) Adjunto(a)' THEN 2
+                    WHEN cargo = 'Diretor(a) de Departamento' THEN 3
+                    WHEN cargo = 'Coordenador(a)' THEN 4
+                    WHEN cargo = 'Chefe de Divisão' THEN 5
+                    WHEN cargo = 'Assessor(a)' THEN 6
+                    ELSE 7
+                END";
+
+            $equipe = MembroEquipe::orderByRaw($ordemCargos) // 1º critério: Hierarquia do cargo
+                                 ->orderBy('ordem', 'asc') // 2º critério: Ordem manual
+                                 ->get();
+
         } catch (\Exception $e) {
             $equipe = collect();
         }

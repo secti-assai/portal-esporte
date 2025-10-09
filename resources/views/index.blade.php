@@ -277,6 +277,7 @@
         <h2>Canais de Atendimento</h2>
         <p>Sua opinião é importante. Entre em contato conosco.</p>
         <div class="cta-buttons">
+            {{-- Whatsapp da secretaria --}}
              <a href="#" class="btn btn-primary">Fale Conosco</a>
         </div>
     </div>
