@@ -132,7 +132,7 @@
                     <div class="collapse navbar-collapse" id="menuPrincipal">
                         <ul class="navbar-nav ms-auto gap-lg-3 mt-3 mt-lg-0">
                             <li><a href="{{ url('/#inicio') }}" class="nav-link">Início</a></li>
-                            <li><a href="{{ url('/#equipe') }}" class="nav-link">Equipe</a></li>
+                            <li><a href="{{ url('/#equipe') }}" class="nav-link">Gestão</a></li>
                             <li><a href="{{ url('/#locais') }}" class="nav-link">Locais</a></li>
                             <li><a href="{{ url('/#servicos') }}" class="nav-link">Serviços</a></li>
                             <li><a href="{{ route('noticias.index') }}" class="nav-link">Notícias</a></li> 
